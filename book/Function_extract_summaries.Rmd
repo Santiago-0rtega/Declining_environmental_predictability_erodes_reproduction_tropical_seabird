@@ -1,0 +1,220 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#| label: setup-final-summaries
+#| include: false
+
+# Load libraries needed for this chapter
+pacman::p_load(here, brms, clipr, broom.mixed)
+```
+
+::: {.callout-note title="Variable definition"}
+\-`X5MISMATCH`: Phenological mismatch calculated using the 5% bloom threshold (in days).
+
+\-`CLUTCH_SIZE`: The number of eggs laid in a nest (ordinal).
+
+\-`FLEDS`: The number of chicks that successfully fledged (ordinal).
+
+\-`TIME`: Chronological time, represented as centered years to model temporal trends. Centering is done by subtracting the mean.
+
+\-`ZX5MISMATCH`: The centered phenological mismatch (5% threshold).
+
+\-`AGE`: The age of the focal individual (in years), centered.
+
+\-`AFR`: The age at first reproduction (in years), centered.
+
+\-`LONGEVITY`: The age at the last observation, a proxy for lifespan (in years), centered.
+
+\-`YEAR`: The calendar year of the observation (treated as a factor).
+
+\-`RING`: The unique alphanumeric identifier for each individual (treated as a factor).
+:::
+
+This section presents the posterior summaries for the best-supported models from each primary analysis. The models for Phenological mismatch and Number of fledglings were selected based on Leave-One-Out Cross-Validation (LOO-CV)
+```{r}
+library(dplyr)
+library(tibble)
+library(clipr)
+
+copy_summary <- function(model) {
+  
+  # 1. Get the summary structure
+  s <- summary(model)
+  
+  # 2. Extract Fixed Effects
+  # We use tryCatch or simple checks to ensure it doesn't fail if a part is missing
+  fixed_df <- if (!is.null(s$fixed)) {
+    as.data.frame(s$fixed) %>% 
+      rownames_to_column("Term") %>% 
+      mutate(Type = "Fixed Effect")
+  } else { NULL }
+  
+  # 3. Extract Random Effects (SDs and Correlations)
+  random_df <- if (length(s$random) > 0) {
+    # Combine list elements into one matrix, then force to data.frame
+    random_raw <- do.call(rbind, lapply(s$random, as.data.frame))
+    as.data.frame(random_raw) %>% 
+      rownames_to_column("Term") %>% 
+      mutate(Type = "Random Effect (SD/Cor)")
+  } else { NULL }
+  
+  # 4. Extract Family Specific Params (Sigma/Shape/etc)
+  spec_df <- if (!is.null(s$spec_pars) && nrow(s$spec_pars) > 0) {
+    as.data.frame(s$spec_pars) %>% 
+      rownames_to_column("Term") %>% 
+      mutate(Type = "Family Specific")
+  } else { NULL }
+  
+  # 5. Combine everything
+  final_table <- bind_rows(fixed_df, random_df, spec_df)
+  
+  # 6. Copy to clipboard
+  write_clip(final_table)
+  
+  # Optional: Print a confirmation message to console
+  message("✅ Summary copied to clipboard! Ready to paste into Excel.")
+  
+  # Return the table invisibly in case you want to assign it to a variable
+  invisible(final_table)
+}
+```
+
+```{r}
+#| label: summary-bloom
+#| eval: true
+#| size: "footnotesize"
+
+
+# Load the model
+model_bloom <- readRDS(here::here("..","Rdata", "model_delta5.rds"))
+
+copy_summary(model_bloom)
+```
+```{r}
+library(dplyr)
+library(tibble)
+library(clipr)
+
+# 1. Capture the summary object
+s <- summary(model_bloom)
+
+# 2. Fixed Effects
+fixed_df <- as.data.frame(s$fixed) %>% 
+  rownames_to_column("Term") %>% 
+  mutate(Type = "Fixed Effect")
+
+# 3. Random Effects (The Fix)
+# We force the result of do.call into a data.frame immediately
+random_raw <- do.call(rbind, lapply(s$random, as.data.frame))
+random_df  <- as.data.frame(random_raw) %>% 
+  rownames_to_column("Term") %>% 
+  mutate(Type = "Random Effect (SD/Cor)")
+
+# 4. Family Specific (Sigma/Residuals)
+spec_df <- as.data.frame(s$spec_pars) %>% 
+  rownames_to_column("Term") %>% 
+  mutate(Type = "Family Specific")
+
+# 5. Bind and Copy
+final_table <- bind_rows(fixed_df, random_df, spec_df)
+
+# Write to clipboard for Excel
+write_clip(final_table)
+
+```
+
+::::: panel-tabset
+## Females
+
+::: panel-tabset
+## Phenological Mismatch
+
+```{r}
+#| label: summary-pm-female-final
+#| eval: true
+#| size: "footnotesize"
+
+
+# Load the model
+model_pm_female_best <- readRDS(here::here("..","Rdata", "female_fit_m8.rds"))
+
+# Print the full model summary
+# 1. Capture the summary object
+s <- summary(model_pm_female_best)
+
+# 2. Fixed Effects
+fixed_df <- as.data.frame(s$fixed) %>% 
+  rownames_to_column("Term") %>% 
+  mutate(Type = "Fixed Effect")
+
+# 3. Random Effects (The Fix)
+# We force the result of do.call into a data.frame immediately
+random_raw <- do.call(rbind, lapply(s$random, as.data.frame))
+random_df  <- as.data.frame(random_raw) %>% 
+  rownames_to_column("Term") %>% 
+  mutate(Type = "Random Effect (SD/Cor)")
+
+# 4. Family Specific (Sigma/Residuals)
+spec_df <- as.data.frame(s$spec_pars) %>% 
+  rownames_to_column("Term") %>% 
+  mutate(Type = "Family Specific")
+
+# 5. Bind and Copy
+final_table <- bind_rows(fixed_df, random_df, spec_df)
+
+# Write to clipboard for Excel
+write_clip(final_table)
+
+```
+
+## Number of Fledglings
+
+```{r}
+#| label: summary-fs-female-final
+#| eval: true
+#| size: "footnotesize"
+
+
+# Load the model
+model_fs_female_best <- readRDS(here::here("..","Rdata", "female_fit_Q17.rds"))
+
+# Print the full model summary
+print(summary(model_fs_female_best), digits =4)
+```
+:::
+
+## Males
+
+::: panel-tabset
+## Phenological Mismatch
+
+```{r}
+#| label: summary-pm-male-final
+#| eval: true
+#| size: "footnotesize"
+
+
+# Load the model
+model_pm_male_best <- readRDS(here::here("..","Rdata", "male_fit_m8.rds"))
+
+# Print the full model summary
+summary(model_pm_male_best)
+```
+
+## Number of Fledglings
+
+```{r}
+#| label: summary-fs-male-final
+#| eval: true
+#| size: "footnotesize"
+
+
+# Load the model
+model_fs_male_best <- readRDS(here::here("..","Rdata", "male_fit_Q17.rds"))
+
+# Print the full model summary
+print(summary(model_fs_male_best),digits=4)
+```

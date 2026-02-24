@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>S9. Code for figures – The collapse of environmental predictability erodes reproductive success in a Tropical seabird</title>
+<title>Code for figures – The collapse of environmental predictability erodes reproductive success in a Tropical seabird</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -312,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sensitivity_blooms.html">Appendices</a></li><li class="breadcrumb-item"><a href="./code_figures.html"><span class="chapter-title">S9. Code for figures</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sensitivity_blooms.html">Appendices</a></li><li class="breadcrumb-item"><a href="./code_figures.html"><span class="chapter-title">Code for figures</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -398,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./code_figures.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">S9. Code for figures</span></a>
+  <a href="./code_figures.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Code for figures</span></a>
   </div>
 </li>
       </ul>
@@ -423,9 +423,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content column-page-right" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sensitivity_blooms.html">Appendices</a></li><li class="breadcrumb-item"><a href="./code_figures.html"><span class="chapter-title">S9. Code for figures</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sensitivity_blooms.html">Appendices</a></li><li class="breadcrumb-item"><a href="./code_figures.html"><span class="chapter-title">Code for figures</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">S9. Code for figures</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Code for figures</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -1447,7 +1447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>    .category <span class="sc">==</span> <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"3"</span>,</span>
 <span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span> <span class="co"># Just in case there are &gt;3, or handle accordingly</span></span>
 <span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter out any categories we aren't interested in (if any exist)</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fled_group)) <span class="sc">%&gt;%</span></span>
 <span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum the probabilities (.epred) within the new groups for every draw</span></span>
 <span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(actual_mismatch, .draw, fled_group) <span class="sc">%&gt;%</span> </span>
@@ -1616,7 +1616,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>plot_fledging_success_age plot_mismatch_prob_altf</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>figure3_female <span class="ot">&lt;-</span> (plot_G <span class="sc">|</span> plot_H) <span class="sc">/</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                (plot_fledging_success_age  <span class="sc">|</span> plot_mismatch_prob_altf ) <span class="sc">+</span></span>
@@ -1636,27 +1635,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final figure</span></span>
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>figure3_male</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true" href="">Females</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false" href="">Males</a></li></ul>
-<div class="tab-content">
-<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Plots/panel_fig2_females_time.jpg" class="img-fluid figure-img"></p>
-<figcaption>Temporal trends in female phenology and fitness</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Plots/panel_fig2_males_time.jpg" class="img-fluid figure-img"></p>
-<figcaption>Temporal trends in male phenology and fitness</figcaption>
-</figure>
-</div>
-</div>
-</div>
 </div>
 <p>The assembled figure is then saved as both a PDF and JPG file.</p>
 <div class="cell">
@@ -2243,7 +2221,7 @@ loaded via a namespace (and not attached):
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "S9. Code for figures"</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Code for figures"</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setup and Data Preparation</span></span>
@@ -3544,7 +3522,7 @@ loaded via a namespace (and not attached):
 <span id="cb44-1376"><a href="#cb44-1376" aria-hidden="true" tabindex="-1"></a>    .category <span class="sc">==</span> <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"3"</span>,</span>
 <span id="cb44-1377"><a href="#cb44-1377" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span> <span class="co"># Just in case there are &gt;3, or handle accordingly</span></span>
 <span id="cb44-1378"><a href="#cb44-1378" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb44-1379"><a href="#cb44-1379" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter out any categories we aren't interested in (if any exist)</span></span>
+<span id="cb44-1379"><a href="#cb44-1379" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-1380"><a href="#cb44-1380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fled_group)) <span class="sc">%&gt;%</span></span>
 <span id="cb44-1381"><a href="#cb44-1381" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum the probabilities (.epred) within the new groups for every draw</span></span>
 <span id="cb44-1382"><a href="#cb44-1382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(actual_mismatch, .draw, fled_group) <span class="sc">%&gt;%</span> </span>
@@ -3721,96 +3699,86 @@ loaded via a namespace (and not attached):
 <span id="cb44-1557"><a href="#cb44-1557" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb44-1558"><a href="#cb44-1558" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb44-1559"><a href="#cb44-1559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1560"><a href="#cb44-1560" aria-hidden="true" tabindex="-1"></a>plot_fledging_success_age plot_mismatch_prob_altf</span>
-<span id="cb44-1561"><a href="#cb44-1561" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1564"><a href="#cb44-1564" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-1565"><a href="#cb44-1565" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: figure 3 females</span></span>
-<span id="cb44-1566"><a href="#cb44-1566" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb44-1567"><a href="#cb44-1567" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb44-1568"><a href="#cb44-1568" aria-hidden="true" tabindex="-1"></a><span class="co">#| dpi: 300</span></span>
-<span id="cb44-1569"><a href="#cb44-1569" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb44-1570"><a href="#cb44-1570" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb44-1571"><a href="#cb44-1571" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb44-1572"><a href="#cb44-1572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1573"><a href="#cb44-1573" aria-hidden="true" tabindex="-1"></a>figure3_female <span class="ot">&lt;-</span> (plot_G <span class="sc">|</span> plot_H) <span class="sc">/</span></span>
-<span id="cb44-1574"><a href="#cb44-1574" aria-hidden="true" tabindex="-1"></a>                (plot_fledging_success_age  <span class="sc">|</span> plot_mismatch_prob_altf ) <span class="sc">+</span></span>
-<span id="cb44-1575"><a href="#cb44-1575" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
-<span id="cb44-1576"><a href="#cb44-1576" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">'A'</span></span>
-<span id="cb44-1577"><a href="#cb44-1577" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb44-1578"><a href="#cb44-1578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1579"><a href="#cb44-1579" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final figure</span></span>
-<span id="cb44-1580"><a href="#cb44-1580" aria-hidden="true" tabindex="-1"></a>figure3_female</span>
-<span id="cb44-1581"><a href="#cb44-1581" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-1582"><a href="#cb44-1582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1585"><a href="#cb44-1585" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-1586"><a href="#cb44-1586" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: figure 3 </span></span>
-<span id="cb44-1587"><a href="#cb44-1587" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb44-1588"><a href="#cb44-1588" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb44-1589"><a href="#cb44-1589" aria-hidden="true" tabindex="-1"></a><span class="co">#| dpi: 300</span></span>
-<span id="cb44-1590"><a href="#cb44-1590" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb44-1591"><a href="#cb44-1591" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb44-1592"><a href="#cb44-1592" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb44-1593"><a href="#cb44-1593" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1594"><a href="#cb44-1594" aria-hidden="true" tabindex="-1"></a>figure3_male <span class="ot">&lt;-</span> (plot_Gm <span class="sc">|</span> plot_Hm) <span class="sc">/</span></span>
-<span id="cb44-1595"><a href="#cb44-1595" aria-hidden="true" tabindex="-1"></a>                (plot_fledging_success_agem  <span class="sc">|</span> plot_mismatch_prob_altm ) <span class="sc">+</span></span>
-<span id="cb44-1596"><a href="#cb44-1596" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
-<span id="cb44-1597"><a href="#cb44-1597" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">'A'</span></span>
-<span id="cb44-1598"><a href="#cb44-1598" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb44-1599"><a href="#cb44-1599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1600"><a href="#cb44-1600" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final figure</span></span>
-<span id="cb44-1601"><a href="#cb44-1601" aria-hidden="true" tabindex="-1"></a>figure3_male</span>
-<span id="cb44-1602"><a href="#cb44-1602" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-1562"><a href="#cb44-1562" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-1563"><a href="#cb44-1563" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: figure 3 females</span></span>
+<span id="cb44-1564"><a href="#cb44-1564" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb44-1565"><a href="#cb44-1565" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb44-1566"><a href="#cb44-1566" aria-hidden="true" tabindex="-1"></a><span class="co">#| dpi: 300</span></span>
+<span id="cb44-1567"><a href="#cb44-1567" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb44-1568"><a href="#cb44-1568" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb44-1569"><a href="#cb44-1569" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb44-1570"><a href="#cb44-1570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1571"><a href="#cb44-1571" aria-hidden="true" tabindex="-1"></a>figure3_female <span class="ot">&lt;-</span> (plot_G <span class="sc">|</span> plot_H) <span class="sc">/</span></span>
+<span id="cb44-1572"><a href="#cb44-1572" aria-hidden="true" tabindex="-1"></a>                (plot_fledging_success_age  <span class="sc">|</span> plot_mismatch_prob_altf ) <span class="sc">+</span></span>
+<span id="cb44-1573"><a href="#cb44-1573" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb44-1574"><a href="#cb44-1574" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">'A'</span></span>
+<span id="cb44-1575"><a href="#cb44-1575" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-1576"><a href="#cb44-1576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1577"><a href="#cb44-1577" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final figure</span></span>
+<span id="cb44-1578"><a href="#cb44-1578" aria-hidden="true" tabindex="-1"></a>figure3_female</span>
+<span id="cb44-1579"><a href="#cb44-1579" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-1580"><a href="#cb44-1580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1583"><a href="#cb44-1583" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-1584"><a href="#cb44-1584" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: figure 3 </span></span>
+<span id="cb44-1585"><a href="#cb44-1585" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb44-1586"><a href="#cb44-1586" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb44-1587"><a href="#cb44-1587" aria-hidden="true" tabindex="-1"></a><span class="co">#| dpi: 300</span></span>
+<span id="cb44-1588"><a href="#cb44-1588" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb44-1589"><a href="#cb44-1589" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb44-1590"><a href="#cb44-1590" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb44-1591"><a href="#cb44-1591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1592"><a href="#cb44-1592" aria-hidden="true" tabindex="-1"></a>figure3_male <span class="ot">&lt;-</span> (plot_Gm <span class="sc">|</span> plot_Hm) <span class="sc">/</span></span>
+<span id="cb44-1593"><a href="#cb44-1593" aria-hidden="true" tabindex="-1"></a>                (plot_fledging_success_agem  <span class="sc">|</span> plot_mismatch_prob_altm ) <span class="sc">+</span></span>
+<span id="cb44-1594"><a href="#cb44-1594" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb44-1595"><a href="#cb44-1595" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">'A'</span></span>
+<span id="cb44-1596"><a href="#cb44-1596" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-1597"><a href="#cb44-1597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1598"><a href="#cb44-1598" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the final figure</span></span>
+<span id="cb44-1599"><a href="#cb44-1599" aria-hidden="true" tabindex="-1"></a>figure3_male</span>
+<span id="cb44-1600"><a href="#cb44-1600" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-1601"><a href="#cb44-1601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1602"><a href="#cb44-1602" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-1603"><a href="#cb44-1603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1604"><a href="#cb44-1604" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb44-1605"><a href="#cb44-1605" aria-hidden="true" tabindex="-1"></a><span class="fu">## Females</span></span>
-<span id="cb44-1606"><a href="#cb44-1606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1607"><a href="#cb44-1607" aria-hidden="true" tabindex="-1"></a><span class="al">![Temporal trends in female phenology and fitness](Plots/panel_fig2_females_time.jpg)</span></span>
-<span id="cb44-1608"><a href="#cb44-1608" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1609"><a href="#cb44-1609" aria-hidden="true" tabindex="-1"></a><span class="fu">## Males</span></span>
-<span id="cb44-1610"><a href="#cb44-1610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1611"><a href="#cb44-1611" aria-hidden="true" tabindex="-1"></a><span class="al">![Temporal trends in male phenology and fitness](Plots/panel_fig2_males_time.jpg)</span></span>
-<span id="cb44-1612"><a href="#cb44-1612" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-1613"><a href="#cb44-1613" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1614"><a href="#cb44-1614" aria-hidden="true" tabindex="-1"></a>The assembled figure is then saved as both a PDF and JPG file.</span>
+<span id="cb44-1604"><a href="#cb44-1604" aria-hidden="true" tabindex="-1"></a>The assembled figure is then saved as both a PDF and JPG file.</span>
+<span id="cb44-1605"><a href="#cb44-1605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1608"><a href="#cb44-1608" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-1609"><a href="#cb44-1609" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: save-figure</span></span>
+<span id="cb44-1610"><a href="#cb44-1610" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb44-1611"><a href="#cb44-1611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1612"><a href="#cb44-1612" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_females.pdf"</span>),</span>
+<span id="cb44-1613"><a href="#cb44-1613" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_female,</span>
+<span id="cb44-1614"><a href="#cb44-1614" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">device =</span> cairo_pdf)</span>
 <span id="cb44-1615"><a href="#cb44-1615" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1618"><a href="#cb44-1618" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-1619"><a href="#cb44-1619" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: save-figure</span></span>
-<span id="cb44-1620"><a href="#cb44-1620" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb44-1616"><a href="#cb44-1616" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_females.jpg"</span>),</span>
+<span id="cb44-1617"><a href="#cb44-1617" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_female,</span>
+<span id="cb44-1618"><a href="#cb44-1618" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>,  </span>
+<span id="cb44-1619"><a href="#cb44-1619" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">9</span>,  </span>
+<span id="cb44-1620"><a href="#cb44-1620" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span>
 <span id="cb44-1621"><a href="#cb44-1621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1622"><a href="#cb44-1622" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_females.pdf"</span>),</span>
-<span id="cb44-1623"><a href="#cb44-1623" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_female,</span>
-<span id="cb44-1624"><a href="#cb44-1624" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">device =</span> cairo_pdf)</span>
-<span id="cb44-1625"><a href="#cb44-1625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1626"><a href="#cb44-1626" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_females.jpg"</span>),</span>
-<span id="cb44-1627"><a href="#cb44-1627" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_female,</span>
-<span id="cb44-1628"><a href="#cb44-1628" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>,  </span>
-<span id="cb44-1629"><a href="#cb44-1629" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">9</span>,  </span>
-<span id="cb44-1630"><a href="#cb44-1630" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb44-1631"><a href="#cb44-1631" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1632"><a href="#cb44-1632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1633"><a href="#cb44-1633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1622"><a href="#cb44-1622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1623"><a href="#cb44-1623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1624"><a href="#cb44-1624" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1625"><a href="#cb44-1625" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_males.pdf"</span>),</span>
+<span id="cb44-1626"><a href="#cb44-1626" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_male,</span>
+<span id="cb44-1627"><a href="#cb44-1627" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">device =</span> cairo_pdf)</span>
+<span id="cb44-1628"><a href="#cb44-1628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1629"><a href="#cb44-1629" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_males.jpg"</span>),</span>
+<span id="cb44-1630"><a href="#cb44-1630" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_male,</span>
+<span id="cb44-1631"><a href="#cb44-1631" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>,  </span>
+<span id="cb44-1632"><a href="#cb44-1632" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">9</span>,  </span>
+<span id="cb44-1633"><a href="#cb44-1633" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span>
 <span id="cb44-1634"><a href="#cb44-1634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1635"><a href="#cb44-1635" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_males.pdf"</span>),</span>
-<span id="cb44-1636"><a href="#cb44-1636" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_male,</span>
-<span id="cb44-1637"><a href="#cb44-1637" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">device =</span> cairo_pdf)</span>
-<span id="cb44-1638"><a href="#cb44-1638" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1639"><a href="#cb44-1639" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Plots"</span>, <span class="st">"panel_fig3_males.jpg"</span>),</span>
-<span id="cb44-1640"><a href="#cb44-1640" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> figure3_male,</span>
-<span id="cb44-1641"><a href="#cb44-1641" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>,  </span>
-<span id="cb44-1642"><a href="#cb44-1642" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">9</span>,  </span>
-<span id="cb44-1643"><a href="#cb44-1643" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb44-1644"><a href="#cb44-1644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1645"><a href="#cb44-1645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1635"><a href="#cb44-1635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1636"><a href="#cb44-1636" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-1637"><a href="#cb44-1637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-1638"><a href="#cb44-1638" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon="false"}</span>
+<span id="cb44-1641"><a href="#cb44-1641" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-1642"><a href="#cb44-1642" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb44-1643"><a href="#cb44-1643" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb44-1644"><a href="#cb44-1644" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb44-1645"><a href="#cb44-1645" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">sessionInfo</span>()</span>
 <span id="cb44-1646"><a href="#cb44-1646" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-1647"><a href="#cb44-1647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-1648"><a href="#cb44-1648" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon="false"}</span>
-<span id="cb44-1651"><a href="#cb44-1651" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-1652"><a href="#cb44-1652" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb44-1653"><a href="#cb44-1653" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb44-1654"><a href="#cb44-1654" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb44-1655"><a href="#cb44-1655" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">sessionInfo</span>()</span>
-<span id="cb44-1656"><a href="#cb44-1656" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-1657"><a href="#cb44-1657" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-1647"><a href="#cb44-1647" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

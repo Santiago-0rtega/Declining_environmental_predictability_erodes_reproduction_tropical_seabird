@@ -247,7 +247,9 @@ Two model families were used:
 
 -   Gaussian models for continuous responses (e.g., phenological mismatch)
 
--   Cumulative ordinal probit models for ordered categorical responses (e.g., number of fledglings) ::: panel-tabset \## Gaussian models (Phenological mismatch)
+-   Cumulative ordinal probit models for ordered categorical responses (e.g., number of fledglings) 
+::: panel-tabset 
+## Gaussian models (Phenological mismatch)
 
 ```{r}
 #| label: Gaussian models
@@ -264,7 +266,7 @@ DT::datatable(dfg, options = list(pageLength = 5))
 dfo <- read.csv(here("summaries","ordinal.csv"))
 DT::datatable(dfo, options = list(pageLength = 5))
 ```
-
+:::
 # Automated model fitting workflow
 
 To systematically evaluate candidate models, we used a custom function (`run_analysis_workflow()`) that automates model fitting, storage, and model comparison.
@@ -525,7 +527,7 @@ run_analysis_workflow(
 
 ## Number of fledglings Analysis
 
-Here, the response variable (\``FLEDS`) is an ordered categorical outcome (0, 1, 2, or 3 fledglings), so models were fitted using a cumulative probit famil
+Here, the response variable (\``FLEDS`) is an ordered categorical outcome (0, 1, 2, or 3 fledglings), so models were fitted using a cumulative probit family
 
 ```{r}
 #| label: Execute fleds males

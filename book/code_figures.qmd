@@ -1,5 +1,5 @@
 ---
-title: "S9. Code for figures"
+title: "Code for figures"
 ---
 
 # Setup and Data Preparation
@@ -1300,7 +1300,7 @@ fledging_grouped_drawsm <- mismatch_drawsm %>%
     .category == "3" ~ "3",
     TRUE ~ NA_character_ # Just in case there are >3, or handle accordingly
   )) %>%
-  # Filter out any categories we aren't interested in (if any exist)
+
   filter(!is.na(fled_group)) %>%
   # Sum the probabilities (.epred) within the new groups for every draw
   group_by(actual_mismatch, .draw, fled_group) %>% 
@@ -1477,8 +1477,6 @@ plot_mismatch_prob_altm <- ggplot() +
 ```
 :::
 
-plot_fledging_success_age plot_mismatch_prob_altf
-
 ```{r}
 #| label: figure 3 females
 #| fig-width: 7
@@ -1517,15 +1515,7 @@ figure3_male <- (plot_Gm | plot_Hm) /
 figure3_male
 ```
 
-::: panel-tabset
-## Females
 
-![Temporal trends in female phenology and fitness](Plots/panel_fig2_females_time.jpg)
-
-## Males
-
-![Temporal trends in male phenology and fitness](Plots/panel_fig2_males_time.jpg)
-:::
 
 The assembled figure is then saved as both a PDF and JPG file.
 

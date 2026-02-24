@@ -14,10 +14,9 @@ This section reports model comparison results used to identify the best-supporte
 
 All candidate models were evaluated using leave-one-out cross-validation (LOO-CV), which estimates out-of-sample predictive performance. Models are ranked by the difference in expected log predictive density (elpd_diff) relative to the top-ranked model.
 
-- The best-supported model in each table has `elpd_diff = 0`.
+-   The best-supported model in each table has `elpd_diff = 0`.
 
-- `se_diff` gives the standard error of the difference in ELPD, indicating uncertainty in the ranking
-# Models syntax
+-   `se_diff` gives the standard error of the difference in ELPD, indicating uncertainty in the ranking \# Models syntax
 
 ::: panel-tabset
 ## Gaussian models (Phenological mismatch)
@@ -41,8 +40,8 @@ DT::datatable(dfo, options = list(pageLength = 5))
 
 # Phenological Mismatch
 
-The following tables summarize LOO-CV comparisons for Gaussian models of phenological mismatch, shown separately for females and males.
-::: panel-tabset
+The following tables summarize LOO-CV comparisons for Gaussian models of phenological mismatch, shown separately for females and males. 
+::: panel-tabset 
 ## Females
 
 ```{r}
@@ -69,11 +68,10 @@ all_comparisonsPMm <- read.csv(here::here("summaries", "all_comparisonsPMm.csv")
 DT::datatable(all_comparisonsPMm, options = list(pageLength = 10))
 ```
 :::
-
 # Number of Fledglings
 
-The following tables summarize LOO-CV comparisons for ordinal models of fledgling number, shown separately for females and males.
-::: panel-tabset
+The following tables summarize LOO-CV comparisons for ordinal models of fledgling number, shown separately for females and males. 
+::: panel-tabset 
 ## Females
 
 ```{r}
@@ -100,7 +98,6 @@ all_comparisonsFSm <- read.csv(here::here("summaries", "all_comparisonsFSm.csv")
 DT::datatable(all_comparisonsFSm, options = list(pageLength = 10))
 ```
 :::
-
 ::: {.callout-tip appearance="simple" icon="false"}
 ```{r}
 #| echo: false

@@ -33,10 +33,7 @@ Model diagnostics: automated checks for common fitting issues (e.g., divergent t
 
 Model comparison: evaluation of predictive performance using leave-one-out cross-validation (LOO-CV)
 
-These procedures were applied to the pheno_mismatch and fleds_full analysis sets
-::: {.callout-important appearance="simple"}
-Diagnostics for bloom onset location–scale models were inspected directly from model summaries because only one model was fitted per threshold.
-:::
+These procedures were applied to the pheno_mismatch and fleds_full analysis sets ::: {.callout-important appearance="simple"} Diagnostics for bloom onset location–scale models were inspected directly from model summaries because only one model was fitted per threshold. :::
 
 ## Diagnostic and comparison functions
 
@@ -45,9 +42,9 @@ Diagnostics for bloom onset location–scale models were inspected directly from
 
 This function automates convergence and sampling-efficiency checks for Bayesian models. It identifies saved model files, loads them, and performs one of two checks:
 
-- Divergences: counts divergent transitions, which may indicate biased posterior exploration.
+-   Divergences: counts divergent transitions, which may indicate biased posterior exploration.
 
-- ESS: evaluates bulk and tail effective sample sizes, flagging parameters with insufficient independent samples (< 400). We used a conservative threshold of 400 for both bulk and tail ESS to flag potentially unstable estimates for further inspection
+-   ESS: evaluates bulk and tail effective sample sizes, flagging parameters with insufficient independent samples (\< 400). We used a conservative threshold of 400 for both bulk and tail ESS to flag potentially unstable estimates for further inspection
 
 Results are returned as a summary table for each model (separated by sex), including the diagnostic outcome and any flagged parameters.
 
@@ -127,6 +124,7 @@ create_diagnostic_summary <- function(analysis_name, check_type = "divergences",
 ## Function 2: `list_analysis_models()`
 
 This function inventories pre-computed LOO objects for a given analysis and returns a data frame listing the available models (sex, model name, file path) for comparison.
+
 ```{r}
 #| label: Function 2
 #| eval: false
@@ -155,6 +153,7 @@ list_analysis_models <- function(analysis_name) {
 ```
 
 ## Function 3: `compare_models_by_sex()`
+
 This function compares models using the loo package. Models are grouped by sex, optionally excluding problematic fits, and ranked by expected log predictive density (ELPD). The comparison output includes differences in ELPD, standard errors, and LOO Information Criterion (LOOIC).
 
 ```{r}
@@ -207,8 +206,6 @@ compare_models_by_sex <- function(model_inventory, exclude_models = NULL) {
 
 # Application to Analyses
 
-
-
 The following sections apply these functions to each analysis set.
 
 ::::: panel-tabset
@@ -254,7 +251,9 @@ DT::datatable(ess_summaryPM, options = list(pageLength = 5))
 :::
 
 ## Model comparison
+
 Pre-computed LOO objects were compared separately for males and females after excluding models flagged as problematic in diagnostic checks.
+
 ```{r}
 #| label: Model comparison pheno_mismatch
 #| eval: false

@@ -33,7 +33,11 @@ Model diagnostics: automated checks for common fitting issues (e.g., divergent t
 
 Model comparison: evaluation of predictive performance using leave-one-out cross-validation (LOO-CV)
 
-These procedures were applied to the pheno_mismatch and fleds_full analysis sets ::: {.callout-important appearance="simple"} Diagnostics for bloom onset location–scale models were inspected directly from model summaries because only one model was fitted per threshold. :::
+These procedures were applied to the pheno_mismatch and fleds_full analysis sets
+
+::: {.callout-important appearance="simple"}
+Diagnostics for bloom onset location–scale models were inspected directly from model summaries because only one model was fitted per threshold.
+:::
 
 ## Diagnostic and comparison functions
 

@@ -50,7 +50,7 @@ format:
   html:
     theme:
       light: cosmo 
-      dark: darkly
+      dark: flatly
     css: styles.css
     mainfont: "Atkinson Hyperlegible"
     fontsize: 1.05em

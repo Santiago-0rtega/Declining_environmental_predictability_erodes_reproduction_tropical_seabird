@@ -3,7 +3,8 @@
 This document provides the supplementary material accompanying our study, The collapse of environmental predictability erodes reproductive success in a tropical seabird. It includes additional methodological details, model-fitting workflows, diagnostic checks, model comparisons, sensitivity analyses, and supporting code/outputs.
 
 To ensure transparency and reproducibility, we also provide the complete datasets (in `.csv` format) and fitted statistical models (as `.rds` files) in the public repository.
-::: card
+
+
 Contents
 
 Main analyses
@@ -16,9 +17,8 @@ Main analyses
 
 - S4. Model diagnostics and selection
 
-- S5. Model comparison
 
-- S6. Full model summaries
+- S5. Full model summaries
 
 Appendices
 
@@ -26,4 +26,3 @@ Appendices
 
 - Code for figures
 
-:::

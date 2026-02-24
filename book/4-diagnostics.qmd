@@ -208,7 +208,7 @@ compare_models_by_sex <- function(model_inventory, exclude_models = NULL) {
 
 The following sections apply these functions to each analysis set.
 
-::::: panel-tabset
+:::: panel-tabset
 ## Diagnostic Checks
 
 Both divergent transitions and low ESS values were checked across all models in this analysis set.
@@ -249,6 +249,7 @@ ess_summaryPM<-read.csv(here("summaries","ess_summaryPM.csv"),header=T)
 DT::datatable(ess_summaryPM, options = list(pageLength = 5))
 ```
 :::
+::::
 
 ## Model comparison
 
@@ -292,11 +293,10 @@ DT::datatable(all_comparisonsPMm, options = list(pageLength = 5))
 
 ```
 :::
-:::::
 
 ## Number of fledglings (`fleds_full`)
 
-::::: panel-tabset
+:::: panel-tabset
 ## Diagnostic Checks
 
 ::: panel-tabset
@@ -336,6 +336,7 @@ ess_summaryFS<-read.csv(here("summaries","ess_summaryFS .csv"),header=T)
 DT::datatable(ess_summaryFS, options = list(pageLength = 5))
 ```
 :::
+::::
 
 ## Model comparison
 
@@ -380,7 +381,6 @@ all_comparisonsFSm <-read.csv(here("summaries","all_comparisonsFSm.csv"),header=
 DT::datatable(all_comparisonsFSm, options = list(pageLength = 5))
 ```
 :::
-:::::
 
 ::: {.callout-tip appearance="simple" icon="false"}
 ```{r}

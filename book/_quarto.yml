@@ -1,6 +1,9 @@
 project:
   type: book
   output-dir: ../docs
+  resources:
+    - styles.css
+    - images
 
 book:
   title: "The collapse of environmental predictability erodes reproductive success in a Tropical seabird"
@@ -22,21 +25,23 @@ book:
       chapters:
         - 1-bloom-onset.qmd
         - 2-phenological-mismatches.qmd
-        - sensitivity_blooms.qmd
         - 3-model-fitting.qmd
         - 4-diagnostics.qmd
         - 5-Model_comparison.qmd
         - 6-full_summaries.qmd
-        - 7-figures.qmd
     - part: "Appendices"
       chapters:
-        - sensitivity_mismatch.qmd
+        - sensitivity_blooms.qmd
         - code_figures.qmd
         
   navbar:
     right:
       - icon: github
         href: https://github.com/Santiago-0rtega/Collapse_environmental_predictability_erodes_reproductive_success
+  sidebar:
+    style: "floating"
+    search: true
+    collapse-level: 2
 
 number-sections: false 
 bibliography: references.bib
@@ -45,17 +50,35 @@ biblio-style: apalike
 format:
   html:
     theme:
-      light: litera
+      light: cosmo 
       dark: darkly
+    css: styles.css
     mainfont: "Atkinson Hyperlegible"
-    code-tools: true
+    fontsize: 1.05em
+    linestretch: 1.35
+    favicon: images/favicon.png
+
     toc: true
     toc-depth: 3
     toc-location: left
-    code-copy: true
 
+    code-tools: true
+    code-copy: true
+    
+
+    link-external-newwindow: true
+    smooth-scroll: true
+
+    # nicer citations in browser
+    citeproc: true
+    page-layout: full
+    grid:
+      sidebar-width: 300px
+      body-width: 1400px  
+      margin-width: 200px
+      gutter-width: 1.5rem
 execute:
-  freeze: auto # Automatically caches results to speed up rendering
+  freeze: auto
   warning: false
   message: false
 

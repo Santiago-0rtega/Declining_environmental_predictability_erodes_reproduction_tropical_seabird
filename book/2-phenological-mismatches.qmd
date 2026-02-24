@@ -1,5 +1,5 @@
 ---
-title: "S2. Phenological mismatches"
+title: "S2. Phenological mismatch"
 ---
 
 ```{r}
@@ -12,14 +12,13 @@ library(tidyverse)
 # For file path management
 library(here)
 ```
-
-This section examines phenological mismatches, defined as the temporal difference between breeding events and the onset of phytoplankton blooms.
+This section describes the preparation and visualization of phenological mismatch values, defined as the difference (in days) between laying date and estimated phytoplankton bloom onset.
 
 ## Data preparation
 
-Data on phenological mismatches were compiled and prepared for visualization. The dataset includes mismatches calculated separately for males and females, across bloom detection thresholds of 5%, 15%, and 25%, and for two seasonal windows (Winter–Spring and Autumn–Spring).
+Phenological mismatch values were compiled for females and males using alternative bloom-onset definitions (5%, 15%, and 25% thresholds above the seasonal median chlorophyll-a concentration) and two seasonal windows (Winter–Spring and Autumn–Spring).
 
-The data were restructured for plotting in `ggplot2`, producing a combined dataset used to generate density plots. These plots are faceted by sex and season, and color-coded by threshold level.
+For visualization, the dataset was reshaped to long format for plotting in `ggplot2`, producing a combined dataset with mismatch values grouped by sex, seasonal window, and threshold definition.
 
 ## Mismatch visualization
 
@@ -129,8 +128,15 @@ mismatch_plot <- ggplot(combined_data, aes(x = Value,
     strip.text = element_text(face = "bold")
   )
 
+
+```
+
+::: card
+```{r}
 print(mismatch_plot)
 ```
+:::
+
 
 ```{r}
 ggsave(filename = here("..","Plots", "mismatch_thresholds.pdf"),
@@ -144,15 +150,9 @@ ggsave(filename = here("..","Plots", "mismatch_thresholds.jpg"),
        dpi = 300)
 ```
 
-## Interpretation of mismatch figure
+## Distributional comparison of mismatch values
 
--   The density plots reveal a consistent bimodal distribution across sexes, thresholds, and seasonal windows.
-
--   Primary mode: Centered at approximately 0 days, indicating synchrony between breeding and bloom onset.
-
--   Secondary mode: A smaller peak around +100 days, reflecting cases where breeding occurs long after bloom initiation.
-
--   Sex and season effects: The distributions are highly similar between males and females and across seasonal windows, suggesting that mismatch estimates are robust to sex-specific or seasonal definitions.
+These density-style histograms compare the distribution of phenological mismatch values across bloom-onset thresholds (5%, 15%, 25%), sexes, and seasonal windows (Winter–Spring vs Autumn–Spring). Panels are faceted by threshold (rows) and sex (columns), and bars are colored by seasonal window. This figure is used to compare how mismatch distributions vary under alternative bloom definitions used in the sensitivity analyses.
 
 ::: {.callout-tip appearance="simple" icon="false"}
 ```{r}

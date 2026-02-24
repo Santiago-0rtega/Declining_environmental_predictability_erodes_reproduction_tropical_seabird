@@ -27,16 +27,15 @@ library(DT)
 
 # Model diagnostics
 
-This section presents the R code used to evaluate model diagnostics and perform model comparisons for the Bayesian analyses reported in the main text. The workflow is divided into two components:
+This section documents the R code used to evaluate model diagnostics and perform model comparisons for the Bayesian analyses reported in the main text. The workflow has two components:
 
-Model diagnostics: automated checks for common fitting issues such as divergent transitions and low Effective Sample Size (ESS).
+Model diagnostics: automated checks for common fitting issues (e.g., divergent transitions and low effective sample size, ESS)
 
-Model comparison: systematic evaluation of predictive performance using Leave-One-Out Cross-Validation (LOO-CV).
+Model comparison: evaluation of predictive performance using leave-one-out cross-validation (LOO-CV)
 
-These procedures were applied to the `pheno_mismatch` and `fleds_full` analyses.
-
+These procedures were applied to the pheno_mismatch and fleds_full analysis sets
 ::: {.callout-important appearance="simple"}
-Note: Diagnostics for bloom onset models were inspected directly from the model summaries because only one model per threshold was fitted.
+Diagnostics for bloom onset location–scale models were inspected directly from model summaries because only one model was fitted per threshold.
 :::
 
 ## Diagnostic and comparison functions
@@ -46,11 +45,11 @@ Note: Diagnostics for bloom onset models were inspected directly from the model 
 
 This function automates convergence and sampling-efficiency checks for Bayesian models. It identifies saved model files, loads them, and performs one of two checks:
 
--   Divergences: counts the number of divergent transitions, which signal potential sampling bias.
+- Divergences: counts divergent transitions, which may indicate biased posterior exploration.
 
--   ESS: evaluates bulk and tail Effective Sample Size, flagging parameters with insufficient independent samples (\< 400; @vehtari_rank-normalization_2021).
+- ESS: evaluates bulk and tail effective sample sizes, flagging parameters with insufficient independent samples (< 400). We used a conservative threshold of 400 for both bulk and tail ESS to flag potentially unstable estimates for further inspection
 
-The results are compiled into a summary table for each model (separated by sex), reporting the outcome of the diagnostic and any problematic parameters
+Results are returned as a summary table for each model (separated by sex), including the diagnostic outcome and any flagged parameters.
 
 ```{r}
 #| label: Function 1
@@ -127,8 +126,7 @@ create_diagnostic_summary <- function(analysis_name, check_type = "divergences",
 
 ## Function 2: `list_analysis_models()`
 
-This function inventories all available pre-computed LOO objects for a given analysis, producing an organized data frame of models (sex, model name, file path) available for comparison.
-
+This function inventories pre-computed LOO objects for a given analysis and returns a data frame listing the available models (sex, model name, file path) for comparison.
 ```{r}
 #| label: Function 2
 #| eval: false
@@ -157,8 +155,7 @@ list_analysis_models <- function(analysis_name) {
 ```
 
 ## Function 3: `compare_models_by_sex()`
-
-This function performs model comparison using the `loo` package. Models are grouped by sex, optionally excluding problematic fits, and ranked by their expected log predictive density (ELPD). The output highlights relative model performance, including differences in ELPD, standard errors, and LOO Information Criterion (LOOIC).
+This function compares models using the loo package. Models are grouped by sex, optionally excluding problematic fits, and ranked by expected log predictive density (ELPD). The comparison output includes differences in ELPD, standard errors, and LOO Information Criterion (LOOIC).
 
 ```{r}
 #| label: Function 3
@@ -210,7 +207,9 @@ compare_models_by_sex <- function(model_inventory, exclude_models = NULL) {
 
 # Application to Analyses
 
-The following sections apply the above functions to each analysis set. \## Phenological Mismatch (`pheno_mismatch`)
+
+
+The following sections apply these functions to each analysis set.
 
 ::::: panel-tabset
 ## Diagnostic Checks
@@ -255,7 +254,7 @@ DT::datatable(ess_summaryPM, options = list(pageLength = 5))
 :::
 
 ## Model comparison
-
+Pre-computed LOO objects were compared separately for males and females after excluding models flagged as problematic in diagnostic checks.
 ```{r}
 #| label: Model comparison pheno_mismatch
 #| eval: false

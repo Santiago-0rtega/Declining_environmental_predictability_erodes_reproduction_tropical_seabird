@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,22 +65,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./7-figures.html" rel="next">
+<link href="./sensitivity_blooms.html" rel="next">
 <link href="./5-Model_comparison.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2a9c7f2eac7477c13d2e63a94091d553.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-01bf8df9ada13ca47d1832082656cd9b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-2a9c7f2eac7477c13d2e63a94091d553.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-039df760d8b2096a87c3e98b74ffc7b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-01ab2c8909333120ec6c01cbceee758c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-039df760d8b2096a87c3e98b74ffc7b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,8 +109,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -281,6 +284,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">The collapse of environmental predictability erodes reproductive success in a Tropical seabird</span>
     </a>
@@ -311,13 +316,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1-bloom-onset.html">Main Analysis</a></li><li class="breadcrumb-item"><a href="./6-full_summaries.html"><span class="chapter-title">S6. Full model summaries</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -341,17 +358,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./2-phenological-mismatches.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S2. Phenological mismatches</span></a>
+  <a href="./2-phenological-mismatches.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S2. Phenological mismatch</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sensitivity_blooms.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S3. Sensitivity analyses: Bloom onset thresholds</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./3-model-fitting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S4. Model fitting workflow</span></a>
+  <a href="./3-model-fitting.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S3. Model fitting workflow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -369,11 +381,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <a href="./6-full_summaries.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">S6. Full model summaries</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./7-figures.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S7. Supplementary figures</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -387,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sensitivity_mismatch.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">S9. Sensitivity Analysis: Bloom Threshold Definition</span></a>
+  <a href="./sensitivity_blooms.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sensitivity analyses: Bloom onset thresholds</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -399,14 +406,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bloom-timing-locationscale-model" id="toc-bloom-timing-locationscale-model" class="nav-link active" data-scroll-target="#bloom-timing-locationscale-model">Bloom timing (location–scale model)</a></li>
+  <li><a href="#best-supported-individual-based-models" id="toc-best-supported-individual-based-models" class="nav-link" data-scroll-target="#best-supported-individual-based-models">Best-supported individual-based models</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1-bloom-onset.html">Main Analysis</a></li><li class="breadcrumb-item"><a href="./6-full_summaries.html"><span class="chapter-title">S6. Full model summaries</span></a></li></ol></nav>
@@ -416,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-right">
 
     
   
@@ -434,29 +448,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Variable definition
+<span class="screen-reader-only">Note</span>Variable definition
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>-<code>X5MISMATCH</code>: Phenological mismatch calculated using the 5% bloom threshold (in days).</p>
-<p>-<code>CLUTCH_SIZE</code>: The number of eggs laid in a nest (ordinal).</p>
-<p>-<code>FLEDS</code>: The number of chicks that successfully fledged (ordinal).</p>
-<p>-<code>TIME</code>: Chronological time, represented as centered years to model temporal trends. Centering is done by subtracting the mean.</p>
-<p>-<code>ZX5MISMATCH</code>: The centered phenological mismatch (5% threshold).</p>
-<p>-<code>AGE</code>: The age of the focal individual (in years), centered.</p>
-<p>-<code>AFR</code>: The age at first reproduction (in years), centered.</p>
-<p>-<code>LONGEVITY</code>: The age at the last observation, a proxy for lifespan (in years), centered.</p>
-<p>-<code>YEAR</code>: The calendar year of the observation (treated as a factor).</p>
-<p>-<code>RING</code>: The unique alphanumeric identifier for each individual (treated as a factor).</p>
+<ul>
+<li><p><code>X5MISMATCH</code>: Phenological mismatch calculated using the 5% bloom threshold (days).</p></li>
+<li><p><code>CLUTCH_SIZE</code>: Number of eggs laid in a nest (ordinal).</p></li>
+<li><p><code>FLEDS</code>: Number of chicks successfully fledged (ordinal).</p></li>
+<li><p><code>TIME</code>: Chronological time (calendar year), centered by subtracting the mean year.</p></li>
+<li><p><code>ZX5MISMATCH</code>: Centered phenological mismatch (5% threshold).</p></li>
+<li><p><code>AGE</code>: Age of the focal individual (years), centered.</p></li>
+<li><p><code>AFR</code>: Age at first reproduction (years), centered.</p></li>
+<li><p><code>LONGEVITY</code>: Age at last observation (proxy for lifespan; years), centered.</p></li>
+<li><p><code>YEAR</code>: Calendar year of the observation (factor).</p></li>
+<li><p><code>RING</code>: Individual identifier (factor).</p></li>
+</ul>
 </div>
 </div>
-<p>This section presents the posterior summaries for the best-supported models from each primary analysis. The models for Phenological mismatch and Number of fledglings were selected based on Leave-One-Out Cross-Validation (LOO-CV)</p>
+<p>This section reports posterior summaries for the best-supported models from the primary analyses. Best-supported models for phenological mismatch and number of fledglings were selected using leave-one-out cross-validation (LOO-CV; see S5).</p>
+<section id="bloom-timing-locationscale-model" class="level2">
+<h2 class="anchored" data-anchor-id="bloom-timing-locationscale-model">Bloom timing (location–scale model)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model_bloom <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"model_delta5.rds"</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_bloom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_bloom),<span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
@@ -467,72 +485,76 @@ Formula: delta5 ~ 1 + TIME
          total post-warmup draws = 16000
 
 Regression Coefficients:
-                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept           6.90      3.27     0.98    13.77 1.00     6118     7692
-sigma_Intercept     2.60      0.17     2.28     2.96 1.00     7678     8641
-TIME                0.53      0.47    -0.38     1.47 1.00     5927     8014
-sigma_TIME          0.11      0.03     0.05     0.18 1.00     7058     7653
+                Estimate Est.Error l-95% CI u-95% CI   Rhat Bulk_ESS Tail_ESS
+Intercept         6.9011    3.2695   0.9788  13.7707 1.0010     6118     7692
+sigma_Intercept   2.5968    0.1732   2.2825   2.9614 1.0002     7678     8641
+TIME              0.5324    0.4735  -0.3822   1.4697 1.0011     5927     8014
+sigma_TIME        0.1145    0.0347   0.0483   0.1849 1.0010     7058     7653
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
+</section>
+<section id="best-supported-individual-based-models" class="level2">
+<h2 class="anchored" data-anchor-id="best-supported-individual-based-models">Best-supported individual-based models</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" aria-current="page">Females</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Males</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Females</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Males</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Phenological Mismatch</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Number of Fledglings</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Phenological Mismatch</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Number of Fledglings</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_pm_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_m8.rds"</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_pm_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_m11.rds"</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_pm_female_best)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_pm_female_best),<span class="at">digits=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
 Formula: X5MISMATCH ~ AGE + I(AGE^2) + TIME + AFR + LONGEVITY + (1 + AGE | q | RING) + (1 | YEAR) 
-         sigma ~ 1 + AGE + TIME + (1 | q | RING)
+         sigma ~ 1 + AGE + I(AGE^2) + TIME + (1 | q | RING)
    Data: data (Number of observations: 8378) 
   Draws: 4 chains, each with iter = 6000; warmup = 2000; thin = 1;
          total post-warmup draws = 16000
 
 Multilevel Hyperparameters:
 ~RING (Number of levels: 2581) 
-                               Estimate Est.Error l-95% CI u-95% CI Rhat
-sd(Intercept)                      9.73      0.61     8.53    10.92 1.00
-sd(AGE)                            1.22      0.18     0.85     1.56 1.00
-sd(sigma_Intercept)                0.42      0.02     0.39     0.45 1.00
-cor(Intercept,AGE)                 0.35      0.13     0.10     0.62 1.01
-cor(Intercept,sigma_Intercept)     0.80      0.05     0.70     0.89 1.00
-cor(AGE,sigma_Intercept)          -0.05      0.11    -0.26     0.15 1.00
+                               Estimate Est.Error l-95% CI u-95% CI   Rhat
+sd(Intercept)                   10.0431    0.6118   8.8390  11.2487 1.0028
+sd(AGE)                          1.0681    0.1958   0.6794   1.4406 1.0019
+sd(sigma_Intercept)              0.4156    0.0157   0.3853   0.4470 1.0002
+cor(Intercept,AGE)               0.4547    0.1420   0.1808   0.7295 1.0066
+cor(Intercept,sigma_Intercept)   0.8059    0.0460   0.7110   0.8913 1.0063
+cor(AGE,sigma_Intercept)         0.0456    0.1281  -0.1986   0.3058 1.0044
                                Bulk_ESS Tail_ESS
-sd(Intercept)                      2111     4917
-sd(AGE)                             978     2368
-sd(sigma_Intercept)                4491     8522
-cor(Intercept,AGE)                  550     1111
-cor(Intercept,sigma_Intercept)      616     1485
-cor(AGE,sigma_Intercept)           3217     8218
+sd(Intercept)                      2048     4410
+sd(AGE)                            1295     4164
+sd(sigma_Intercept)                4479     7870
+cor(Intercept,AGE)                  732     2803
+cor(Intercept,sigma_Intercept)     1022     2150
+cor(AGE,sigma_Intercept)           3086     5501
 
 ~YEAR (Number of levels: 21) 
-              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)    46.63      8.15    33.92    65.18 1.00     3083     5728
+              Estimate Est.Error l-95% CI u-95% CI   Rhat Bulk_ESS Tail_ESS
+sd(Intercept)  46.6221    8.1437  34.0081  65.5280 1.0002     3842     6762
 
 Regression Coefficients:
-                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept          48.82     10.49    28.38    69.61 1.00     1493     3257
-sigma_Intercept     3.31      0.01     3.28     3.34 1.00     4083     9381
-AGE                -1.00      0.14    -1.26    -0.73 1.00     9096    11790
-IAGEE2              0.32      0.02     0.28     0.36 1.00     8442    11286
-TIME               -1.98      1.72    -5.34     1.48 1.00     2349     4486
-AFR                 1.10      0.25     0.60     1.60 1.00    11070    11854
-LONGEVITY          -0.15      0.11    -0.35     0.06 1.00     8590    11724
-sigma_AGE          -0.01      0.00    -0.01    -0.00 1.00     5348     9337
-sigma_TIME          0.02      0.00     0.02     0.03 1.00     6277    10902
+                Estimate Est.Error l-95% CI u-95% CI   Rhat Bulk_ESS Tail_ESS
+Intercept        48.4414   10.5394  27.9738  69.8830 1.0035     2078     3999
+sigma_Intercept   3.2609    0.0170   3.2274   3.2942 1.0004     5891    11106
+AGE              -0.9421    0.1394  -1.2167  -0.6665 1.0005     9839    11736
+IAGEE2            0.3342    0.0222   0.2916   0.3775 1.0002    11910    12036
+TIME             -1.9677    1.7148  -5.3674   1.3996 1.0004     2503     4662
+AFR               1.1357    0.2533   0.6447   1.6369 1.0002    12633    13126
+LONGEVITY        -0.1536    0.1063  -0.3592   0.0561 1.0000    10312    11779
+sigma_AGE        -0.0133    0.0034  -0.0200  -0.0067 1.0001     7905    11815
+sigma_IAGEE2      0.0031    0.0006   0.0019   0.0043 1.0004    13297    13077
+sigma_TIME        0.0232    0.0025   0.0183   0.0280 1.0000     7132    12347
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -542,11 +564,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model_fs_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_Q17.rds"</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_female_best), <span class="at">digits =</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_female_best), <span class="at">digits =</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
   Links: mu = probit; disc = log 
@@ -599,56 +621,57 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Phenological Mismatch</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Number of Fledglings</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Phenological Mismatch</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Number of Fledglings</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_pm_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_m8.rds"</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_pm_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_m11.rds"</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_pm_male_best)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_pm_male_best),<span class="at">digits=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
 Formula: X5MISMATCH ~ AGE + I(AGE^2) + TIME + AFR + LONGEVITY + (1 + AGE | q | RING) + (1 | YEAR) 
-         sigma ~ 1 + AGE + TIME + (1 | q | RING)
+         sigma ~ 1 + AGE + I(AGE^2) + TIME + (1 | q | RING)
    Data: data (Number of observations: 8962) 
   Draws: 4 chains, each with iter = 6000; warmup = 2000; thin = 1;
          total post-warmup draws = 16000
 
 Multilevel Hyperparameters:
 ~RING (Number of levels: 2910) 
-                               Estimate Est.Error l-95% CI u-95% CI Rhat
-sd(Intercept)                      7.10      0.52     6.07     8.13 1.00
-sd(AGE)                            1.34      0.18     0.98     1.69 1.00
-sd(sigma_Intercept)                0.43      0.02     0.40     0.46 1.00
-cor(Intercept,AGE)                 0.37      0.12     0.12     0.59 1.02
-cor(Intercept,sigma_Intercept)     0.79      0.05     0.68     0.88 1.01
-cor(AGE,sigma_Intercept)          -0.12      0.10    -0.32     0.07 1.00
+                               Estimate Est.Error l-95% CI u-95% CI   Rhat
+sd(Intercept)                    7.4408    0.5209   6.4101   8.4544 1.0026
+sd(AGE)                          1.0790    0.2090   0.6591   1.4731 1.0028
+sd(sigma_Intercept)              0.4231    0.0158   0.3923   0.4538 1.0005
+cor(Intercept,AGE)               0.5223    0.1317   0.2506   0.7592 1.0053
+cor(Intercept,sigma_Intercept)   0.7723    0.0512   0.6702   0.8704 1.0068
+cor(AGE,sigma_Intercept)         0.0106    0.1266  -0.2296   0.2629 1.0020
                                Bulk_ESS Tail_ESS
-sd(Intercept)                      2805     6151
-sd(AGE)                            2118     3907
-sd(sigma_Intercept)                4308     8695
-cor(Intercept,AGE)                  468     2203
-cor(Intercept,sigma_Intercept)      753     1561
-cor(AGE,sigma_Intercept)           3199     7604
+sd(Intercept)                      2865     5959
+sd(AGE)                            2062     2125
+sd(sigma_Intercept)                4431     8434
+cor(Intercept,AGE)                  959     2665
+cor(Intercept,sigma_Intercept)      758     1470
+cor(AGE,sigma_Intercept)           2799     3118
 
 ~YEAR (Number of levels: 21) 
-              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)    47.09      8.02    34.44    65.96 1.00     3078     5406
+              Estimate Est.Error l-95% CI u-95% CI   Rhat Bulk_ESS Tail_ESS
+sd(Intercept)  46.8384    8.0174  34.1769  65.9187 1.0009     3412     6100
 
 Regression Coefficients:
-                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept          50.74     10.31    30.36    70.89 1.00     1984     4107
-sigma_Intercept     3.36      0.01     3.34     3.39 1.00     5859     9277
-AGE                -1.18      0.14    -1.45    -0.91 1.00    10428    12144
-IAGEE2              0.27      0.02     0.22     0.31 1.00     9532    11391
-TIME               -1.80      1.71    -5.14     1.58 1.00     2441     4540
-AFR                 0.75      0.24     0.27     1.23 1.00    12383    12139
-LONGEVITY          -0.05      0.10    -0.24     0.15 1.00    10927    12505
-sigma_AGE          -0.00      0.00    -0.01     0.00 1.00     6879    11170
-sigma_TIME          0.03      0.00     0.02     0.03 1.00    10746    13138
+                Estimate Est.Error l-95% CI u-95% CI   Rhat Bulk_ESS Tail_ESS
+Intercept        50.7086   10.2537  30.1020  70.6948 1.0014     2287     4094
+sigma_Intercept   3.3046    0.0162   3.2729   3.3362 1.0006     7660    11383
+AGE              -1.0962    0.1399  -1.3699  -0.8238 1.0001    14066    12628
+IAGEE2            0.2832    0.0248   0.2354   0.3323 1.0003    13293    12808
+TIME             -1.8333    1.6934  -5.1376   1.4567 1.0004     2970     4887
+AFR               0.7859    0.2415   0.3073   1.2551 1.0001    13462    12476
+LONGEVITY        -0.0411    0.1003  -0.2409   0.1529 1.0000    14682    12481
+sigma_AGE        -0.0127    0.0035  -0.0195  -0.0058 1.0005     9578    12187
+sigma_IAGEE2      0.0045    0.0006   0.0033   0.0058 1.0000    13334    12867
+sigma_TIME        0.0279    0.0024   0.0232   0.0326 1.0002    13678    12881
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -658,11 +681,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model_fs_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_Q17.rds"</span>))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_male_best),<span class="at">digits=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_male_best),<span class="at">digits=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
   Links: mu = probit; disc = log 
@@ -735,40 +758,43 @@ locale:
 [3] LC_MONETARY=English_Guernsey.utf8 LC_NUMERIC=C                     
 [5] LC_TIME=English_Guernsey.utf8    
 
-time zone: America/Mexico_City
+time zone: America/Edmonton
 tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] brms_2.23.0 Rcpp_1.1.0  here_1.0.2 
+[1] brms_2.23.0 Rcpp_1.1.1  here_1.0.2 
 
 loaded via a namespace (and not attached):
- [1] bridgesampling_1.2-1  tensorA_0.36.2.1      generics_0.1.4       
- [4] stringi_1.8.7         lattice_0.22-7        digest_0.6.39        
- [7] magrittr_2.0.4        estimability_1.5.1    evaluate_1.0.5       
-[10] grid_4.5.2            RColorBrewer_1.1-3    mvtnorm_1.3-3        
-[13] fastmap_1.2.0         plyr_1.8.9            rprojroot_2.1.1      
-[16] jsonlite_2.0.0        Matrix_1.7-4          processx_3.8.6       
-[19] pkgbuild_1.4.8        backports_1.5.0       gridExtra_2.3        
-[22] ps_1.9.1              Brobdingnag_1.2-9     QuickJSR_1.8.1       
-[25] scales_1.4.0          codetools_0.2-20      abind_1.4-8          
-[28] cli_3.6.5             rlang_1.1.6           cmdstanr_0.9.0.9000  
-[31] yaml_2.3.11           StanHeaders_2.32.10   inline_0.3.21        
-[34] rstan_2.32.7          tools_4.5.2           parallel_4.5.2       
-[37] reshape2_1.4.5        rstantools_2.5.0      checkmate_2.3.3      
-[40] coda_0.19-4.1         dplyr_1.1.4           ggplot2_4.0.1        
-[43] pacman_0.5.1          vctrs_0.6.5           posterior_1.6.1      
-[46] R6_2.6.1              stats4_4.5.2          emmeans_2.0.0        
-[49] matrixStats_1.5.0     lifecycle_1.0.4       stringr_1.6.0        
-[52] htmlwidgets_1.6.4     pkgconfig_2.0.3       RcppParallel_5.1.11-1
-[55] pillar_1.11.1         gtable_0.3.6          loo_2.8.0            
-[58] glue_1.8.0            xfun_0.54             tibble_3.3.0         
-[61] tidyselect_1.2.1      rstudioapi_0.17.1     knitr_1.50           
-[64] farver_2.1.2          bayesplot_1.14.0      htmltools_0.5.9      
-[67] nlme_3.1-168          rmarkdown_2.30        compiler_4.5.2       
-[70] S7_0.2.1              distributional_0.5.0 </code></pre>
+ [1] gtable_0.3.6          tensorA_0.36.2.1      QuickJSR_1.9.0       
+ [4] xfun_0.56             ggplot2_4.0.1         htmlwidgets_1.6.4    
+ [7] processx_3.8.6        inline_0.3.21         lattice_0.22-7       
+[10] vctrs_0.7.1           tools_4.5.2           ps_1.9.1             
+[13] generics_0.1.4        stats4_4.5.2          parallel_4.5.2       
+[16] sandwich_3.1-1        tibble_3.3.1          pacman_0.5.1         
+[19] cmdstanr_0.9.0.9000   pkgconfig_2.0.3       Matrix_1.7-4         
+[22] checkmate_2.3.3       RColorBrewer_1.1-3    S7_0.2.1             
+[25] distributional_0.6.0  RcppParallel_5.1.11-1 lifecycle_1.0.5      
+[28] compiler_4.5.2        farver_2.1.2          stringr_1.6.0        
+[31] Brobdingnag_1.2-9     codetools_0.2-20      htmltools_0.5.9      
+[34] bayesplot_1.15.0      yaml_2.3.12           pillar_1.11.1        
+[37] MASS_7.3-65           StanHeaders_2.32.10   bridgesampling_1.2-1 
+[40] abind_1.4-8           multcomp_1.4-29       nlme_3.1-168         
+[43] posterior_1.6.1       rstan_2.32.7          tidyselect_1.2.1     
+[46] digest_0.6.39         mvtnorm_1.3-3         stringi_1.8.7        
+[49] reshape2_1.4.5        dplyr_1.1.4           splines_4.5.2        
+[52] rprojroot_2.1.1       fastmap_1.2.0         grid_4.5.2           
+[55] cli_3.6.5             magrittr_2.0.4        loo_2.9.0            
+[58] pkgbuild_1.4.8        survival_3.8-6        TH.data_1.1-5        
+[61] scales_1.4.0          backports_1.5.0       estimability_1.5.1   
+[64] rmarkdown_2.30        matrixStats_1.5.0     emmeans_2.0.1        
+[67] otel_0.2.0            gridExtra_2.3         zoo_1.8-15           
+[70] coda_0.19-4.1         evaluate_1.0.5        knitr_1.51           
+[73] rstantools_2.6.0      rlang_1.1.7           xtable_1.8-4         
+[76] glue_1.8.0            rstudioapi_0.18.0     jsonlite_2.0.0       
+[79] plyr_1.8.9            R6_2.6.1             </code></pre>
 </div>
 </div>
 </div>
@@ -778,6 +804,7 @@ loaded via a namespace (and not attached):
 
 <!-- -->
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -844,13 +871,14 @@ loaded via a namespace (and not attached):
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -930,6 +958,11 @@ loaded via a namespace (and not attached):
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1243,19 +1276,19 @@ loaded via a namespace (and not attached):
     }
   });
   </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./5-Model_comparison.html" class="pagination-link" aria-label="S5. Model comparison">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">S5. Model comparison</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./7-figures.html" class="pagination-link" aria-label="S7. Supplementary figures">
-        <span class="nav-page-text"><span class="chapter-title">S7. Supplementary figures</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sensitivity_blooms.html" class="pagination-link" aria-label="Sensitivity analyses: Bloom onset thresholds">
+        <span class="nav-page-text"><span class="chapter-title">Sensitivity analyses: Bloom onset thresholds</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "S6. Full model summaries"</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">unnumbered:</span><span class="co"> true</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
@@ -1269,127 +1302,133 @@ loaded via a namespace (and not attached):
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Variable definition"}</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`X5MISMATCH`</span>: Phenological mismatch calculated using the 5% bloom threshold (in days).</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`X5MISMATCH`</span>: Phenological mismatch calculated using the 5% bloom threshold (days).</span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`CLUTCH_SIZE`</span>: The number of eggs laid in a nest (ordinal).</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`CLUTCH_SIZE`</span>: Number of eggs laid in a nest (ordinal).</span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`FLEDS`</span>: The number of chicks that successfully fledged (ordinal).</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`FLEDS`</span>: Number of chicks successfully fledged (ordinal).</span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`TIME`</span>: Chronological time, represented as centered years to model temporal trends. Centering is done by subtracting the mean.</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`TIME`</span>: Chronological time (calendar year), centered by subtracting the mean year.</span>
 <span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`ZX5MISMATCH`</span>: The centered phenological mismatch (5% threshold).</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ZX5MISMATCH`</span>: Centered phenological mismatch (5% threshold).</span>
 <span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`AGE`</span>: The age of the focal individual (in years), centered.</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`AGE`</span>: Age of the focal individual (years), centered.</span>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`AFR`</span>: The age at first reproduction (in years), centered.</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`AFR`</span>: Age at first reproduction (years), centered.</span>
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`LONGEVITY`</span>: The age at the last observation, a proxy for lifespan (in years), centered.</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`LONGEVITY`</span>: Age at last observation (proxy for lifespan; years), centered.</span>
 <span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`YEAR`</span>: The calendar year of the observation (treated as a factor).</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`YEAR`</span>: Calendar year of the observation (factor).</span>
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span><span class="in">`RING`</span>: The unique alphanumeric identifier for each individual (treated as a factor).</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`RING`</span>: Individual identifier (factor).</span>
 <span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>This section presents the posterior summaries for the best-supported models from each primary analysis. The models for Phenological mismatch and Number of fledglings were selected based on Leave-One-Out Cross-Validation (LOO-CV)</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>This section reports posterior summaries for the best-supported models from the primary analyses. Best-supported models for phenological mismatch and number of fledglings were selected using leave-one-out cross-validation (LOO-CV; see S5).</span>
 <span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-bloom</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>model_bloom <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"model_delta5.rds"</span>))</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bloom timing (location–scale model)</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-bloom</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_bloom)</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>model_bloom <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"model_delta5.rds"</span>))</span>
 <span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>::::: panel-tabset</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Females</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_bloom),<span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phenological Mismatch</span></span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-pm-female-final</span></span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>model_pm_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_m8.rds"</span>))</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_pm_female_best)</span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Best-supported individual-based models</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>::::: panel-tabset</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Females</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phenological Mismatch</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-pm-female-final</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>model_pm_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_m11.rds"</span>))</span>
 <span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Number of Fledglings</span></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-fs-female-final</span></span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>model_fs_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_Q17.rds"</span>))</span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_female_best), <span class="at">digits =</span><span class="dv">4</span>)</span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_pm_female_best),<span class="at">digits=</span><span class="dv">4</span>)</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Number of Fledglings</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-fs-female-final</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>model_fs_female_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"female_fit_Q17.rds"</span>))</span>
 <span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Males</span></span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phenological Mismatch</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_female_best), <span class="at">digits =</span><span class="dv">4</span>)</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-pm-male-final</span></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>model_pm_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_m8.rds"</span>))</span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_pm_male_best)</span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Number of Fledglings</span></span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-fs-male-final</span></span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>model_fs_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_Q17.rds"</span>))</span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_male_best),<span class="at">digits=</span><span class="dv">4</span>)</span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>:::::</span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon="false"}</span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">sessionInfo</span>()</span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## Males</span></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phenological Mismatch</span></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-pm-male-final</span></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>model_pm_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_m11.rds"</span>))</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_pm_male_best),<span class="at">digits=</span><span class="dv">4</span>)</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Number of Fledglings</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-fs-male-final</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| size: "footnotesize"</span></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model</span></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>model_fs_male_best <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,<span class="st">"Rdata"</span>, <span class="st">"male_fit_Q17.rds"</span>))</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the full model summary</span></span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_fs_male_best),<span class="at">digits=</span><span class="dv">4</span>)</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>:::::</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon="false"}</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">sessionInfo</span>()</span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

@@ -12,28 +12,31 @@ pacman::p_load(here, brms)
 ```
 
 ::: {.callout-note title="Variable definition"}
-\-`X5MISMATCH`: Phenological mismatch calculated using the 5% bloom threshold (in days).
+- `X5MISMATCH`: Phenological mismatch calculated using the 5% bloom threshold (days).
 
-\-`CLUTCH_SIZE`: The number of eggs laid in a nest (ordinal).
+- `CLUTCH_SIZE`: Number of eggs laid in a nest (ordinal).
 
-\-`FLEDS`: The number of chicks that successfully fledged (ordinal).
+- `FLEDS`: Number of chicks successfully fledged (ordinal).
 
-\-`TIME`: Chronological time, represented as centered years to model temporal trends. Centering is done by subtracting the mean.
+- `TIME`: Chronological time (calendar year), centered by subtracting the mean year.
 
-\-`ZX5MISMATCH`: The centered phenological mismatch (5% threshold).
+- `ZX5MISMATCH`: Centered phenological mismatch (5% threshold).
 
-\-`AGE`: The age of the focal individual (in years), centered.
+- `AGE`: Age of the focal individual (years), centered.
 
-\-`AFR`: The age at first reproduction (in years), centered.
+- `AFR`: Age at first reproduction (years), centered.
 
-\-`LONGEVITY`: The age at the last observation, a proxy for lifespan (in years), centered.
+- `LONGEVITY`: Age at last observation (proxy for lifespan; years), centered.
 
-\-`YEAR`: The calendar year of the observation (treated as a factor).
+- `YEAR`: Calendar year of the observation (factor).
 
-\-`RING`: The unique alphanumeric identifier for each individual (treated as a factor).
+- `RING`: Individual identifier (factor).
 :::
 
-This section presents the posterior summaries for the best-supported models from each primary analysis. The models for Phenological mismatch and Number of fledglings were selected based on Leave-One-Out Cross-Validation (LOO-CV)
+This section reports posterior summaries for the best-supported models from the primary analyses. Best-supported models for phenological mismatch and number of fledglings were selected using leave-one-out cross-validation (LOO-CV; see S5).
+
+
+## Bloom timing (location–scale model)
 
 ```{r}
 #| label: summary-bloom
@@ -45,10 +48,12 @@ This section presents the posterior summaries for the best-supported models from
 model_bloom <- readRDS(here::here("..","Rdata", "model_delta5.rds"))
 
 # Print the full model summary
-summary(model_bloom)
+print(summary(model_bloom),digits = 4)
 
 ```
 
+
+## Best-supported individual-based models
 ::::: panel-tabset
 ## Females
 
@@ -62,10 +67,10 @@ summary(model_bloom)
 
 
 # Load the model
-model_pm_female_best <- readRDS(here::here("..","Rdata", "female_fit_m8.rds"))
+model_pm_female_best <- readRDS(here::here("..","Rdata", "female_fit_m11.rds"))
 
 # Print the full model summary
-summary(model_pm_female_best)
+print(summary(model_pm_female_best),digits=4)
 
 ```
 
@@ -97,10 +102,10 @@ print(summary(model_fs_female_best), digits =4)
 
 
 # Load the model
-model_pm_male_best <- readRDS(here::here("..","Rdata", "male_fit_m8.rds"))
+model_pm_male_best <- readRDS(here::here("..","Rdata", "male_fit_m11.rds"))
 
 # Print the full model summary
-summary(model_pm_male_best)
+print(summary(model_pm_male_best),digits=4)
 ```
 
 ## Number of Fledglings

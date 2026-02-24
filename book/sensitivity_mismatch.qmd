@@ -1,5 +1,5 @@
 ---
-title: "S9. Sensitivity Analysis: Bloom Threshold Definition"
+title: " Sensitivity Analysis: Bloom Threshold Definition"
 ---
 
 This section details a sensitivity analysis to test the robustness of the phenological mismatch model to the definition of the bloom start date. The main analysis uses a 5% increase over the seasonal median chlorophyll-a as the threshold to define the bloom (`X5MISMATCH`). Here, we refit the best-supported Gaussian model for phenological mismatch using two alternative, more sensitive thresholds: a 15% increase (`X15MISMATCH`) and a 25% increase (`X25MISMATCH`).

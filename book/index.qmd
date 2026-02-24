@@ -1,25 +1,29 @@
 ## Overview
 
-This document provides the supplementary material accompanying our study The collapse of environmental predictability erodes reproductive success in a Tropical seabird. It contains additional methodological details, model workflows, diagnostic checks, sensitivity analyses, and all supporting figures.
+This document provides the supplementary material accompanying our study, The collapse of environmental predictability erodes reproductive success in a tropical seabird. It includes additional methodological details, model-fitting workflows, diagnostic checks, model comparisons, sensitivity analyses, and supporting code/outputs.
 
-To ensure transparency and reproducibility, we also provide the complete datasets (in `.csv` format) and the full statistical models (as R Data Serializable `.rds` files). All files are available in the public repository:
+To ensure transparency and reproducibility, we also provide the complete datasets (in `.csv` format) and fitted statistical models (as `.rds` files) in the public repository.
+::: card
+Contents
 
-### Contents
+Main analyses
 
-S1. Chlorophyll-a bloom detection
+- S1. Chlorophyll-a bloom detection
 
-S2. Phenological mismatches
+- S2. Phenological mismatches
 
-S3. Sensitivity analyses: Bloom onset thresholds
+- S3. Model fitting workflow
 
-S4. Model fitting workflow
+- S4. Model diagnostics and selection
 
-S5. Model diagnostics and selection
+- S5. Model comparison
 
-S6. Model comparison
+- S6. Full model summaries
 
-S7. Supplementary figures
+Appendices
 
-S8. Sensitivity analyses: Bloom threshold definition
+- Sensitivity analyses: Bloom threshold definition
 
-S9. Code for figures
+- Code for figures
+
+:::

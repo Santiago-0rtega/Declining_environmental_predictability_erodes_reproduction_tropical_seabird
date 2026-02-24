@@ -1,0 +1,91 @@
+---
+title: "Expected fledglings"
+---
+
+
+
+```{r}
+#| label: setup-final-summaries
+#| include: false
+
+# Load libraries needed for this chapter
+pacman::p_load(here, brms, tidyverse)
+```
+
+
+
+
+```{r}
+fit_ord <- readRDS(here::here("..","Rdata", "female_fit_Q17.rds"))
+```
+
+
+
+
+
+
+
+```{r}
+range(fit_ord$data$TIME)
+```
+
+
+```{r}
+time_early <- -8.643948
+time_late  <-  11.356052
+```
+
+
+
+```{r}
+newdat <- tibble(
+  ZX5MISMATCH = c(0, 0),
+  TIME        = c(time_early, time_late),
+  AGE         = c(0, 0),
+  AFR         = c(0, 0),
+  LONGEVITY   = c(0, 0)
+)
+```
+
+
+
+```{r}
+# ---- 3) Posterior predicted category probabilities ----
+# re_formula = NA excludes random effects (population-level prediction)
+# Result dimensions are typically: draws x newdata_rows x categories
+ep <- posterior_epred(fit_ord, newdata = newdat, re_formula = NA)
+
+# Check dimensions (optional)
+print(dim(ep))
+# expected: [n_draws, 2, 4]
+
+# ---- 4) Convert category probabilities to expected fledglings ----
+
+
+fled_vals <- c(0, 1, 2, 3)
+
+# Expected fledglings per draw for each row in newdata
+# early = row 1, late = row 2
+E_early <- ep[, 1, ] %*% fled_vals
+E_late  <- ep[, 2, ] %*% fled_vals
+
+# Convert matrices to numeric vectors
+E_early <- as.numeric(E_early)
+E_late  <- as.numeric(E_late)
+
+# ---- 5) Percent change across study period ----
+pct_change <- 100 * (E_late - E_early) / E_early
+
+# ---- 6) Summarize posterior distribution ----
+summary_tbl <- tibble(
+  quantity = c("Expected fledglings (early)", "Expected fledglings (late)", "Percent change"),
+  median   = c(median(E_early), median(E_late), median(pct_change)),
+  l95      = c(quantile(E_early, 0.025), quantile(E_late, 0.025), quantile(pct_change, 0.025)),
+  u95      = c(quantile(E_early, 0.975), quantile(E_late, 0.975), quantile(pct_change, 0.975))
+)
+
+print(summary_tbl)
+```
+
+
+

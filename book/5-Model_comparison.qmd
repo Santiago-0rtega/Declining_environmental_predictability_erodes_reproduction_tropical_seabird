@@ -1,5 +1,5 @@
 ---
-title: " S5. Model comparison"
+title: "S5. Model comparison"
 ---
 
 ```{r}
@@ -10,14 +10,13 @@ title: " S5. Model comparison"
 pacman::p_load(here, dplyr, DT,loo)
 ```
 
-This section presents the results of the model comparisons used to identify the best-performing model for each analysis.
+This section reports model comparison results used to identify the best-supported model for each analysis.
 
-All candidate models were evaluated with Leave-One-Out Cross-Validation (LOO-CV), which estimates a model’s out-of-sample predictive accuracy. Models are ranked by their expected log predictive density (elpd_diff):
+All candidate models were evaluated using leave-one-out cross-validation (LOO-CV), which estimates out-of-sample predictive performance. Models are ranked by the difference in expected log predictive density (elpd_diff) relative to the top-ranked model.
 
-The top-ranked model in each table has an elpd_diff of 0 and is considered the best supported.
+- The best-supported model in each table has `elpd_diff = 0`.
 
-The se_diff column reports the standard error of the difference, quantifying the uncertainty in ranking.
-
+- `se_diff` gives the standard error of the difference in ELPD, indicating uncertainty in the ranking
 # Models syntax
 
 ::: panel-tabset
@@ -30,7 +29,7 @@ dfg <- read.csv(here("summaries","gaussian.csv"))
 DT::datatable(dfg, options = list(pageLength = 5))
 ```
 
-## Ordinal models (Clutch size and Number of fledglings)
+## Ordinal models (Number of fledglings)
 
 ```{r}
 #| label: Ordinal models
@@ -42,8 +41,7 @@ DT::datatable(dfo, options = list(pageLength = 5))
 
 # Phenological Mismatch
 
-The following tables summarize the LOO-CV model comparisons for the Gaussian models of phenological mismatch. Results are shown separately for females and males.
-
+The following tables summarize LOO-CV comparisons for Gaussian models of phenological mismatch, shown separately for females and males.
 ::: panel-tabset
 ## Females
 
@@ -74,8 +72,7 @@ DT::datatable(all_comparisonsPMm, options = list(pageLength = 10))
 
 # Number of Fledglings
 
-The following tables summarize the LOO-CV model comparisons for the ordinal models of fledgling number. Results are shown separately for females and males.
-
+The following tables summarize LOO-CV comparisons for ordinal models of fledgling number, shown separately for females and males.
 ::: panel-tabset
 ## Females
 

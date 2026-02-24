@@ -1,12 +1,13 @@
 ---
-title: "S4. Model fitting workflow"
+title: "S3. Model fitting workflow"
 ---
 
-This section describes the complete workflow used to fit the models. Two sets of analyses were conducted:
+This section documents the model-fitting workflow used in the study. It includes:
 
--   Location–scale models of bloom phenology
+-   Location–scale models for bloom phenology (Gaussian outcomes)
+-   Hierarchical Bayesian models for phenological mismatch (Gaussian) and reproductive performance (ordinal cumulative probit)
 
--   Hierarchical Bayesian models of phenological mismatch and reproductive performance (main analysis, described here as supplement to the results).
+Most code chunks are provided as a reproducible workflow record (`eval: false`) rather than executed during rendering of the supplementary document.
 
 ```{r}
 #| label: setup-model-fitting
@@ -32,8 +33,6 @@ library(DT)
 
 ## Configuring Parallel Processing
 
-
-
 ```{r}
 
 options(mc.cores = parallel::detectCores(), brms.backend = "cmdstanr")
@@ -41,7 +40,7 @@ options(mc.cores = parallel::detectCores(), brms.backend = "cmdstanr")
 ```
 
 ::: {.callout-tip appearance="simple" icon="false"}
-Threading can accelerate computation by distributing processes across multiple cores. This requires installing the cmdstanr package and its CmdStan backend.
+Threading can accelerate computation by distributing sampling across CPU cores. This requires the cmdstanr package and a working CmdStan installation.
 
 ```{r}
 #| code-fold: FALSE
@@ -56,21 +55,21 @@ cmdstanr::cmdstan_version()
 
 # Location–scale models of bloom phenology
 
-This model examined how both the mean timing and variability of bloom onset (days since Winter solstice)have changed over years.
+These models tested whether both the mean timing and variability of bloom onset (days since the winter solstice) changed over time.
 
 ::: {.callout-note title="Variable definitions"}
--   delta5: Bloom onset date at the 5% threshold.
+-   delta5: Bloom onset date (days since winter solstice) at the 5% threshold.
 
--   delta15: Bloom onset date at the 15% threshold.
+-   delta15: Bloom onset date (days since winter solstice) at the 15% threshold.
 
--   delta25: Bloom onset date at the 25% threshold.
+-   delta25: Bloom onset date (days since winter solstice) at the 25% threshold.
 
--   TIME: Calendar year, centered.
+-   TIME: Calendar year, centered (not scaled).
 :::
 
 ## Data transformation
 
-Bloom onset dates were converted into days since the previous winter solstice
+Bloom onset dates were converted to days since the previous winter solstice.
 
 ```{r}
 #| label: bloom-data
@@ -99,7 +98,7 @@ dat <- dat %>%
 
 ## Model function
 
-A wrapper function was used to fit Gaussian location–scale models for each bloom threshold (5%, 15%, 25%).
+A wrapper function was used to fit Gaussian location–scale models for each bloom threshold (5%, 15%, 25%), with `TIME` included in both the location (μ) and scale (σ) submodels.
 
 ```{r}
 #| label: bloom-function
@@ -154,32 +153,38 @@ run_location_scale_models(response_vars = delta_vars, data = dat)
 
 ## Data preparation
 
-Before fitting the models, the primary dataset was loaded and pre-processed. Separate data frames were created for males and females, with the following key steps:
+The primary breeding dataset was loaded and pre-processed separately for females and males.
 
--   Type conversion: Variables were converted to the appropriate type. Reproductive outcome (`FLEDS`) was encoded as ordered factors for use in cumulative ordinal models.
+Key preprocessing steps included:
 
--   Centering of continious predictors: `TIME`, `X5MISMATCH`,`AGE`, `AFR`, `LONGEVITY`.
+Type conversion of predictors to numeric
 
--   Identifiers: Year (YEAR) and individual identity (RING) were treated as factors.
+Encoding reproductive outcome (`FLEDS`) as an ordered factor for cumulative ordinal models
+
+Centering (not scaling) continuous predictors (`TIME`, `X5MISMATCH`, `AGE`, `AFR`, `LONGEVITY`)
+
+Converting `YEAR` and `RING` to factors for use as grouping variables
 
 ::: {.callout-note title="Variable definitions"}
--   X5MISMATCH: Phenological mismatch at the 5% bloom threshold (days).
+-   `X5MISMATCH`: Phenological mismatch (days) using the 5% bloom threshold
 
--   FLEDS: Number of fledged chicks (ordinal).
+-   `FLEDS`: Number of fledged chicks (ordinal response: 0–3)
 
--   TIME: Calendar year, centered.
+-   `TIME`: Calendar year, centered (not scaled)
 
--   ZX5MISMATCH: Centered phenological mismatch (5% threshold).
+-   `ZX5MISMATCH`: Centered phenological mismatch (5% threshold)
 
--   AGE: Age of the individual, centered.
+-   `ABSMATCH`: Centered absolute mismatch (5% threshold)
 
--   AFR: Age at first reproduction, centered.
+-   `AGE`: Age, centered
 
--   LONGEVITY: Age at last observation (proxy for lifespan), centered.
+-   `AFR`: Age at first reproduction, centered
 
--   YEAR: Calendar year of observation (factor).
+-   `LONGEVITY`: Age at last observation (proxy for lifespan), centered
 
--   RING: Individual identifier (factor).
+-   `YEAR`: Calendar year (factor)
+
+-   `RING`: Individual identifier (factor)
 :::
 
 ::: panel-tabset
@@ -240,12 +245,9 @@ dat0 <- read.csv(here("..","data", "Lay_date_mismatches_250702.csv")) %>%
 
 Two model families were used:
 
--   Gaussian models for continuous responses (e.g., phenological mismatch).
+-   Gaussian models for continuous responses (e.g., phenological mismatch)
 
--   Cumulative ordinal models for ordered categorical responses (e.g., clutch size and fledgling success).
-
-::: panel-tabset
-## Gaussian models (Phenological mismatch)
+-   Cumulative ordinal probit models for ordered categorical responses (e.g., number of fledglings) ::: panel-tabset \## Gaussian models (Phenological mismatch)
 
 ```{r}
 #| label: Gaussian models
@@ -262,21 +264,24 @@ DT::datatable(dfg, options = list(pageLength = 5))
 dfo <- read.csv(here("summaries","ordinal.csv"))
 DT::datatable(dfo, options = list(pageLength = 5))
 ```
-:::
 
 # Automated model fitting workflow
 
-To systematically evaluate candidate models, we developed a custom R function, run_analysis_workflow(). This function automates model fitting and evaluation by:
+To systematically evaluate candidate models, we used a custom function (`run_analysis_workflow()`) that automates model fitting, storage, and model comparison.
 
--   Defining candidate models: Iterating over combinations of fixed and random effects structures.
+The workflow:
 
--   Flexibility: Handling Gaussian and ordinal model families.
+-   iterates over candidate fixed- and random-effects structures,
 
--   Modeling auxiliary parameters: Estimating residual standard deviation (`sigma`) in Gaussian models or the discrimination parameter (`disc`) in ordinal models.
+-   supports both Gaussian and ordinal families,
 
--   Error handling and efficiency: Skipping models already fitted, saving results automatically, and using `tryCatch` to prevent failures from halting the workflow.
+-   optionally models auxiliary parameters (sigma for Gaussian models; disc for ordinal models),
 
--   Model evaluation: Saving both the fitted models and their leave-one-out cross-validation (`LOO`) objects.
+-   skips models that were already fitted,
+
+-   saves fitted models and leave-one-out cross-validation (`LOO`) objects, and
+
+-   uses `tryCatch()` so individual failures do not halt the full workflow.
 
 ::: panel-tabset
 ## Define Fixed Effects Structures
@@ -490,23 +495,21 @@ if (!is.null(model_subset_key)) {
 
 # Executing the workflow for all analyses
 
-The workflow was run independently for males and females for the following analyses:
+The workflow was run separately for males (dat0) and females (dat) for:
 
--   Phenological mismatch: Modeled as a Gaussian response (`X5MISMATCH`).
+-   Phenological mismatch (Gaussian response: `X5MISMATCH`)
 
--   Fledgling success: Modeled as an ordinal response (`FLEDS`).
+-   Fledging success (ordinal response: `FLEDS`)
 
-Each set of candidate models was fitted and stored for subsequent model comparison.
+-   Each candidate model set was fitted and saved for subsequent model comparison.
 
 ::::: panel-tabset
 ## Analyses for males
 
-The workflow is first executed using the pre-processed male dataset (dat0).
+The workflow was first run using the male dataset (dat0).
 
 ::: panel-tabset
 ## Phenological mismatch Analysis
-
-This analysis models the continuous phenological mismatch (`X5MISMATCH`) as the response variable. A Gaussian model family is specified, which is appropriate for a normally distributed outcome
 
 ```{r}
 #| label: Execute pheno males
@@ -522,7 +525,7 @@ run_analysis_workflow(
 
 ## Number of fledglings Analysis
 
-Here, the response variable is the number of fledglings (`FLEDS`) is an ordered categorical outcome (0, 1, 2, or 3 fledglings. For these type of models, the specified family used is `cumulative(link = "probit")`.
+Here, the response variable (\``FLEDS`) is an ordered categorical outcome (0, 1, 2, or 3 fledglings), so models were fitted using a cumulative probit famil
 
 ```{r}
 #| label: Execute fleds males
@@ -558,7 +561,7 @@ run_analysis_workflow(
 
 ## Analyses for females
 
-The entire workflow is then repeated for the female dataset (dat1). The function calls are identical in structure, differing only in the data
+The same workflow was then run using the female dataset (dat)
 
 ::: panel-tabset
 ## Phenological mismatch Analysis
@@ -610,8 +613,6 @@ run_analysis_workflow(
 ```
 :::
 :::::
-
-
 
 ::: {.callout-tip appearance="simple" icon="false"}
 ```{r}

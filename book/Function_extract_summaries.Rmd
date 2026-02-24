@@ -34,6 +34,7 @@ pacman::p_load(here, brms, clipr, broom.mixed)
 :::
 
 This section presents the posterior summaries for the best-supported models from each primary analysis. The models for Phenological mismatch and Number of fledglings were selected based on Leave-One-Out Cross-Validation (LOO-CV)
+
 ```{r}
 library(dplyr)
 library(tibble)
@@ -93,118 +94,35 @@ model_bloom <- readRDS(here::here("..","Rdata", "model_delta5.rds"))
 
 copy_summary(model_bloom)
 ```
+
+
+
+
 ```{r}
-library(dplyr)
-library(tibble)
-library(clipr)
-
-# 1. Capture the summary object
-s <- summary(model_bloom)
-
-# 2. Fixed Effects
-fixed_df <- as.data.frame(s$fixed) %>% 
-  rownames_to_column("Term") %>% 
-  mutate(Type = "Fixed Effect")
-
-# 3. Random Effects (The Fix)
-# We force the result of do.call into a data.frame immediately
-random_raw <- do.call(rbind, lapply(s$random, as.data.frame))
-random_df  <- as.data.frame(random_raw) %>% 
-  rownames_to_column("Term") %>% 
-  mutate(Type = "Random Effect (SD/Cor)")
-
-# 4. Family Specific (Sigma/Residuals)
-spec_df <- as.data.frame(s$spec_pars) %>% 
-  rownames_to_column("Term") %>% 
-  mutate(Type = "Family Specific")
-
-# 5. Bind and Copy
-final_table <- bind_rows(fixed_df, random_df, spec_df)
-
-# Write to clipboard for Excel
-write_clip(final_table)
-
+model_pm_female_best <- readRDS(here::here("..","Rdata", "female_fit_m11.rds"))
+copy_summary(model_pm_female_best)
 ```
 
-::::: panel-tabset
-## Females
-
-::: panel-tabset
-## Phenological Mismatch
 
 ```{r}
-#| label: summary-pm-female-final
-#| eval: true
-#| size: "footnotesize"
-
-
-# Load the model
-model_pm_female_best <- readRDS(here::here("..","Rdata", "female_fit_m8.rds"))
-
-# Print the full model summary
-# 1. Capture the summary object
-s <- summary(model_pm_female_best)
-
-# 2. Fixed Effects
-fixed_df <- as.data.frame(s$fixed) %>% 
-  rownames_to_column("Term") %>% 
-  mutate(Type = "Fixed Effect")
-
-# 3. Random Effects (The Fix)
-# We force the result of do.call into a data.frame immediately
-random_raw <- do.call(rbind, lapply(s$random, as.data.frame))
-random_df  <- as.data.frame(random_raw) %>% 
-  rownames_to_column("Term") %>% 
-  mutate(Type = "Random Effect (SD/Cor)")
-
-# 4. Family Specific (Sigma/Residuals)
-spec_df <- as.data.frame(s$spec_pars) %>% 
-  rownames_to_column("Term") %>% 
-  mutate(Type = "Family Specific")
-
-# 5. Bind and Copy
-final_table <- bind_rows(fixed_df, random_df, spec_df)
-
-# Write to clipboard for Excel
-write_clip(final_table)
-
+model_pm_male_best <- readRDS(here::here("..","Rdata", "male_fit_m11.rds"))
+copy_summary(model_pm_male_best)
 ```
 
-## Number of Fledglings
+
+
+
 
 ```{r}
-#| label: summary-fs-female-final
-#| eval: true
-#| size: "footnotesize"
 
 
 # Load the model
 model_fs_female_best <- readRDS(here::here("..","Rdata", "female_fit_Q17.rds"))
 
-# Print the full model summary
-print(summary(model_fs_female_best), digits =4)
+copy_summary(model_fs_female_best)
 ```
 :::
 
-## Males
-
-::: panel-tabset
-## Phenological Mismatch
-
-```{r}
-#| label: summary-pm-male-final
-#| eval: true
-#| size: "footnotesize"
-
-
-# Load the model
-model_pm_male_best <- readRDS(here::here("..","Rdata", "male_fit_m8.rds"))
-
-# Print the full model summary
-summary(model_pm_male_best)
-```
-
-## Number of Fledglings
 
 ```{r}
 #| label: summary-fs-male-final
@@ -213,8 +131,8 @@ summary(model_pm_male_best)
 
 
 # Load the model
-model_fs_male_best <- readRDS(here::here("..","Rdata", "male_fit_Q17.rds"))
+model_fs_male_best <- readRDS(here::here("..","Rdata", "male_fit_Q17.rds")
 
-# Print the full model summary
-print(summary(model_fs_male_best),digits=4)
+copy_summary(model_fs_male_best)
 ```
+

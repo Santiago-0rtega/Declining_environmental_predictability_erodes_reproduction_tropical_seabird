@@ -33,7 +33,7 @@ library(DT)
 
 # S1.1 Map of Isla Isabel
 
-A map of Isla Isabel, Mexico, is generated to provide geographical context for the study area. The figure highlights the island’s location within the eastern tropical Pacific, outlines the surrounding coastal region, and marks the island itself with a reference point.
+A map of Isla Isabel, Mexico, is provided for geographic context. The figure shows the island’s location in the eastern tropical Pacific, the surrounding coastal region, and the focal extraction area used for chlorophyll-a data.
 
 ```{r}
 #| label: map_final_refinements
@@ -118,10 +118,21 @@ inset_map <- ggplot() +
 mapIS<-ggdraw() +
   draw_plot(main_map) +
   draw_plot(inset_map, x = 0.05, y = 0.15, width = 0.38, height = 0.38)
-mapIS
+
 ```
 
+
+
+::: card
 ```{r}
+mapIS
+```
+:::
+
+```{r}
+#| label: save_map
+#| eval: false
+
 ggsave(filename = here("..","Plots", "Map_Isla_Isabel.pdf"),
        plot = mapIS,
        dpi = 300, device = cairo_pdf)
@@ -134,8 +145,7 @@ ggsave(filename = here("..","Plots", "Map_Isla_Isabel.jpg"),
 ```
 
 # S1.2 Bloom onset
-
-This section details the methodology used to estimate the onset of phytoplankton blooms based on satellite-derived chlorophyll-a time series.
+This section describes the procedure used to estimate phytoplankton bloom onset from satellite-derived chlorophyll-a time series.
 
 ## Chlorophyll-a bloom detection
 
@@ -144,7 +154,8 @@ Satellite-derived chlorophyll-a data were processed to identify the onset of sea
 ::::: panel-tabset
 ## Load chlorophyll data
 
-The chlorophyll-a data is loaded from a CSV file. The data is cleaned by removing missing values (`NA`), selecting the relevant `date` and `chlorophyll` columns, and converting the date column to a proper date format using `lubridate::dmy()`
+Chlorophyll-a data were loaded from a CSV file, cleaned by removing missing values (NA), restricted to the date and chlorophyll columns, and converted to a date format using `lubridate::dmy()`.
+
 
 ```{r}
 #| label: chlorophyll data
@@ -157,22 +168,22 @@ CHL_df <- CHL_df %>%
   mutate(date = dmy(date)) 
 ```
 
-## Calculate sustained bloom start
+## Estimate sustained bloom onset
 
-Two custom functions were developed to estimate bloom onset dates for different seasonal windows. Both apply the following procedure:
+Two custom functions were used to estimate bloom onset dates under different seasonal-window definitions. Both apply the same detection procedure:
 
--   Seasonal window: Define a “season year” spanning either December–June or September–June.
+- Seasonal window: Define a season year spanning either Winter–Spring (21 December–20 June) or Autumn–Spring (21 September–20 June).
 
--   Baseline: Calculate the seasonal median chlorophyll-a concentration.
+- Baseline: Compute the seasonal median chlorophyll-a concentration for each season year.
 
--   Thresholds: Set dynamic thresholds at 5%, 15%, 25%, and 30% above the seasonal median.
+- Thresholds: Define dynamic thresholds at 5%, 15%, 25%, and 30% above the seasonal median.
 
--   Sustained increase: Identify the first day when two consecutive 7-day rolling medians exceed the threshold, ensuring that the increase is persistent rather than transient.
+- Sustained increase criterion: Identify the first day for which two consecutive 7-day rolling medians exceed the threshold, to distinguish sustained increases from short-term fluctuations.
 
--   Output: Return the bloom start date, chlorophyll-a concentration on that date, and the corresponding threshold.
+- Output: Return the estimated bloom onset date, chlorophyll-a value at onset, and the corresponding threshold value.
 
 :::: panel-tabset
-## Winter to Spring window
+Winter–Spring window (21 December–20 June)
 
 This function defines the season as running from December 21st of the previous year to June 20th of the current year.
 
@@ -276,7 +287,7 @@ calculate_sustained_bloom_start <- function(data_frame, value_column_name = "dai
 #write.csv(bloom_starts2, here("data", "bloom_dates.csv"), row.names = FALSE)
 ```
 
-## Autumn to Spring Window
+## Autumn–Spring window (21 September–20 June)
 
 This function defines a broader season, running from September 21st of the previous year to June 20th of the current year.
 
@@ -385,8 +396,7 @@ bloom_startsB <- calculate_sustained_bloom_startB(CHL_df)
 
 ::: panel-tabset
 ## Summary for Winter to Spring
-
-This table summarizes bloom start dates detected within the December–June seasonal window.
+This table summarizes estimated bloom onset dates for the Winter–Spring seasonal window (21 December–20 June).
 
 ```{r}
 #| label: Summary A
@@ -408,7 +418,7 @@ DT::datatable(
 
 ## Summary for Autumn to Spring
 
-This table summarizes bloom start dates detected within the September–June seasonal window.
+This table summarizes estimated bloom onset dates for the Autumn–Spring seasonal window (21 September–20 June).
 
 ```{r}
 #| label: Summary B
@@ -431,13 +441,13 @@ DT::datatable(
 ::::
 :::::
 
-# S1.3 Visualization of Chlorophyl-a bloom start dates
+# S1.3 Visualization of Chlorophyl-a bloom onset dates
 
-To examine the distribution and timing of bloom onsets, detection results were transformed and visualized. Density plots compare bloom start dates across thresholds and seasonal windows.
+To visualize the distribution of estimated bloom onset dates across years, detection outputs were transformed and plotted for comparison across thresholds and seasonal windows.
 
 ### Data processing for visualization
 
-Prior to plotting, results were transformed into long format for analysis with ggplot2. A helper function (process_for_plotting) standardized bloom dates across years and summarized them by detection threshold. Dates from September–December were aligned to 2000 and January–June dates to 2001, creating a continuous seasonal year.
+Before plotting, bloom onset estimates were converted to long format for visualization with `ggplot2`. A helper function (`process_for_plotting`) standardized dates to a common seasonal calendar by assigning September–December dates to year 2000 and January–June dates to year 2001, enabling comparison of timing distributions across years and thresholds.
 
 ```{r}
 #| label: Frequency of bloom start dates
@@ -477,7 +487,6 @@ sample_sizes_B <- bloom_dates_long_B %>%
   summarise(label = paste("n =", n_distinct(season_year)), .groups = "drop")
 
 
-# Calculate mean dates for vertical lines
 mean_dates_A <- bloom_dates_long_A %>%
   group_by(threshold) %>%
   summarise(mean_date = as.Date(mean(as.numeric(bloom_day_month)), origin = "1970-01-01"), .groups = "drop")
@@ -490,10 +499,9 @@ mean_dates_B <- bloom_dates_long_B %>%
 
 ```
 
-### Generating and combining density plots
+### Generating and combining onset-date distribution plots
 
-Density plots were generated for each seasonal window, faceted by threshold level. Dashed vertical lines mark the mean bloom onset, and sample sizes are displayed in each panel. The two plots were combined for side-by-side comparison.
-
+Binned area plots were generated for each seasonal window and faceted by threshold level. Panel labels indicate the number of seasons with a detected bloom onset for each threshold. The Winter–Spring and Autumn–Spring panels were combined for side-by-side comparison.
 ```{r}
 #| label: Area plot of bloom start dates
 
@@ -505,10 +513,10 @@ area_plot_A <- ggplot(bloom_dates_long_A,
                       # Add 'color' aesthetic
                       aes(x = bloom_day_month, fill = threshold, color = threshold)) +
   
-  # --- Replace geom_histogram with geom_area ---
+
   geom_area(
     stat = "bin",
-    binwidth = 1,         # Keeps the 7-day binning
+    binwidth = 1,         
     boundary = 0,
     alpha = 0.6,          # Adjusted alpha for better overlap
     position = "identity",
@@ -520,19 +528,19 @@ area_plot_A <- ggplot(bloom_dates_long_A,
   labs(subtitle = "Winter to Spring", x = NULL, y = "Count") +
   theme_light() +
   scale_fill_manual(values = bloom_colors) +
-  scale_color_manual(values = bloom_colors) + # <-- Add matching color scale
+  scale_color_manual(values = bloom_colors) + 
   scale_x_date(limits = c(as.Date("2000-09-01"), as.Date("2001-06-20")), date_labels = "%b", date_breaks = "1 month") +
   theme(plot.subtitle = element_text(hjust = 0.5), legend.position = "none", strip.text = element_text(face = "bold"))
 
 # --- Plot B ---
 area_plot_B <- ggplot(bloom_dates_long_B, 
-                      # Add 'color' aesthetic
+                    
                       aes(x = bloom_day_month, fill = threshold, color = threshold)) +
   
-  # --- Replace geom_histogram with geom_area ---
+
   geom_area(
     stat = "bin",
-    binwidth = 1,         # Keeps the 7-day binning
+    binwidth = 1,         
     boundary = 0,
     alpha = 0.6,
     position = "identity",
@@ -544,7 +552,7 @@ area_plot_B <- ggplot(bloom_dates_long_B,
   labs(subtitle = "Autumn to Spring", x = NULL, y = "Count") +
   theme_light() +
   scale_fill_manual(values = bloom_colors) +
-  scale_color_manual(values = bloom_colors) + # <-- Add matching color scale
+  scale_color_manual(values = bloom_colors) + 
   scale_x_date(limits = c(as.Date("2000-09-01"), as.Date("2001-06-20")), date_labels = "%b", date_breaks = "1 month") +
   theme(plot.subtitle = element_text(hjust = 0.5), legend.position = "none", strip.text = element_text(face = "bold"))
 
@@ -554,58 +562,33 @@ combined_plot <- area_plot_A + area_plot_B +
     tag_levels = 'A'
   )
 
-# Print the final combined plot
-print(combined_plot)
-```
-
-```{r}
-#| label: Histograms of bloom start dates
-#| code-fold: true
-
-
-histogram_plot_A <- ggplot(bloom_dates_long_A, aes(x = bloom_day_month, fill = threshold)) +
-  geom_histogram(
-    binwidth = 7,         # Sets bin width to 7 days (1 week)
-    boundary = 0,         # Aligns bins cleanly with the week
-    alpha = 0.7, 
-    position = "identity" # Allows transparent overlap
-  ) +
-  geom_text(data = sample_sizes_A, aes(x = as.Date("2001-06-15"), y = Inf, label = label), vjust = 1.5, hjust = 1, size = 3, inherit.aes = FALSE) +
-  facet_wrap(~threshold, ncol = 1, scales = "fixed") +
-  labs(subtitle = "Winter to Spring", x = NULL, y = "Count") +
-  theme_light() +
-  scale_fill_manual(values = c("5%"="#2c7bb6", "15%"="#abd9e9", "25%"="#fdae61", "30%"="#d7191c")) +
-  scale_x_date(limits = c(as.Date("2000-09-01"), as.Date("2001-06-20")), date_labels = "%b", date_breaks = "1 month") +
-  theme(plot.subtitle = element_text(hjust = 0.5), legend.position = "none",strip.text = element_text(face = "bold"))
-
-
-histogram_plot_B <- ggplot(bloom_dates_long_B, aes(x = bloom_day_month, fill = threshold)) +
-  geom_histogram(
-    binwidth = 7,         # Sets bin width to 7 days (1 week)
-    boundary = 0,         # Aligns bins cleanly with the week
-    alpha = 0.7, 
-    position = "identity" # Allows transparent overlap
-  ) +
-  facet_wrap(~threshold, ncol = 1, scales = "fixed") + 
-  geom_text(data = sample_sizes_B, aes(x = as.Date("2001-06-15"), y = Inf, label = label), vjust = 1.5, hjust = 1, size = 3, inherit.aes = FALSE)+
-  labs(subtitle = "Autumn to Spring", x = NULL, y = "Count") +
-  theme_light() +
-  scale_fill_manual(values = c("5%"="#2c7bb6", "15%"="#abd9e9", "25%"="#fdae61", "30%"="#d7191c")) +
-  scale_x_date(limits = c(as.Date("2000-09-01"), as.Date("2001-06-20")), date_labels = "%b", date_breaks = "1 month") +
-  theme(plot.subtitle = element_text(hjust = 0.5), legend.position = "none",strip.text = element_text(face = "bold"))
-
-# Combine plots with patchwork
-combined_plot <- histogram_plot_A  +histogram_plot_B  +
-  plot_annotation(
-    tag_levels = 'A'
-  )
-
-# Print the final combined plot
-print(combined_plot)
 
 ```
 
+::: card
 ```{r}
+# Print the final combined plot
+print(combined_plot)
+```
+:::
+
+
+
+
+
+### Description of bloom onset date distributions
+
+This figure summarizes the distribution of detected phytoplankton bloom onset dates across years under alternative detection thresholds and seasonal windows. The left column shows results for the Winter–Spring window (21 December–20 June), and the right column shows results for the Autumn–Spring window (21 September–20 June). Rows correspond to threshold definitions (5%, 15%, 25%, and 30% above the seasonal median chlorophyll-a concentration).
+
+Bloom onset dates were standardized to a common seasonal calendar (September–December mapped to year 2000; January–June mapped to year 2001) to enable comparison of timing distributions across years. Panel labels report the number of seasons with detected bloom onsets for each threshold.
+
+The plots are provided to visualize how estimated bloom onset timing varies across threshold choices and seasonal-window definitions, and to support the robustness comparisons used in the main analyses and supplementary sensitivity checks.
+
+
+
+```{r}
+#| label: Save bloom start date plots
+#| eval: false
 ggsave(filename = here("..","Plots", "bloom_thresholds.pdf"),
        plot = combined_plot,
        dpi = 300, device = cairo_pdf)
@@ -616,18 +599,6 @@ ggsave(filename = here("..","Plots", "bloom_thresholds.jpg"),
        height = 7,  
        dpi = 300)
 ```
-
-### Interpretation of Bloom start date figure
-
-This figure shows the frequency distribution of phytoplankton bloom start dates. The left column displays results for a Winter–Spring seasonal window (Dec–Jun), while the right column uses a broader Autumn–Spring window (Sep–Jun). Each row represents a different detection threshold (5%, 15%, 25%, and 30%) relative to the seasonal median chlorophyll-a concentration.
-
-Key patterns include:
-
-Higher Thresholds Delay Bloom Onset: As the detection threshold increases from 5% to 30%, the timing of the bloom onset is consistently pushed later into the year. The earliest blooms, detected with the 5% threshold, peak in December and January. In contrast, the most intense blooms (30% threshold) do not typically start until late January or February. This pattern is expected, as it takes more time for phytoplankton biomass to accumulate to higher concentrations.
-
-Bimodal Onset: The Autumn-Spring analysis reveals a distinct bimodal pattern in bloom timing. An initial wave of blooms occurs in early autumn (September-October), followed by a lull. After this quiet period, the primary, more sustained spring bloom begins in winter, with its subsequent timing and frequency closely mirroring the patterns observed in the Winter-Spring-only analysis. This overall bimodal structure strongly suggests the early autumn blooms are event-driven phenomena, likely triggered by nutrient injection from late-season storms or hurricanes.
-
-Bloom variability: The decreasing sample size (n) for higher thresholds indicates strong year-to-year variability. This suggests that high-magnitude blooms are not an annual occurrence, pointing to the influence of variable environmental conditions.
 
 ::: {.callout-tip appearance="simple" icon="false"}
 ```{r}

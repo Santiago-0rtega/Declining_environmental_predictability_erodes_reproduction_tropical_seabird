@@ -1,7 +1,9 @@
 ---
-title: "S3. Sensitivity analyses: Bloom onset thresholds"
+title: "Sensitivity analyses: Bloom onset thresholds"
 unnumbered: true
 ---
+This section evaluates whether inference about bloom phenology is robust to the chlorophyll-a bloom onset threshold used to define bloom start (5%, 15%, and 25% above the seasonal median). We report posterior summaries for the location–scale models fit to each threshold and provide the code used to fit these models.
+
 
 ```{r}
 
@@ -49,51 +51,49 @@ options(mc.cores = parallel::detectCores(), brms.backend = "cmdstanr")
 plan(multisession, workers=4) 
 ```
 
-## Calculate Days Since Winter Solstice
+## Data transformation: bloom onset as days since winter solstice
+
+Bloom onset dates were converted to numeric offsets (days) from the previous winter solstice (December 21), matching the parameterization used in the main bloom phenology analyses.
 
 ```{r}
+
 #| label: data-transformation
 #| eval: false
-dat<-read.csv(here("..","data","bloom_dates.csv"))
+dat <- read.csv(here("..","data","bloom_dates.csv"))
+
 dat <- dat %>%
   mutate(
-    # --- Date Calculations ---
-    # To calculate the days from winter, we first need to convert the date strings
-    # into actual Date objects that R can understand.
-    bloom_start_thr5_as_date = as.Date(bloom_start_thr5, format = "%d/%m/%Y"),
+    # --- Date parsing for detected bloom onsets ---
+    bloom_start_thr5_as_date  = as.Date(bloom_start_thr5,  format = "%d/%m/%Y"),
     bloom_start_thr15_as_date = as.Date(bloom_start_thr15, format = "%d/%m/%Y"),
     bloom_start_thr25_as_date = as.Date(bloom_start_thr25, format = "%d/%m/%Y"),
-    
-    # We define the winter solstice as Dec 21 of the year before the season starts.
-    winter_start_date = as.Date(paste0(season_year - 1, "-12-21")),
-    
-    # Now we can calculate the difference in days, creating the new 'delta' columns.
-    # This is the most logical interpretation of making the date columns "numeric".
-    delta5 = as.numeric(
-        difftime(bloom_start_thr5_as_date, winter_start_date, units = "days")
-    ),
-    delta15 = as.numeric(
-        difftime(bloom_start_thr15_as_date, winter_start_date, units = "days")
-    ),
-    delta25 = as.numeric(
-        difftime(bloom_start_thr25_as_date, winter_start_date, units = "days")
-    ),
 
-    # --- Type Conversions and Renaming ---
-    # Here we convert season_year to a factor and rename it to TIME.
-    TIME = as.factor(season_year),
-    
-    # And we ensure the various 'value_at_bloom' columns are numeric.
-    value5 = as.numeric(value_at_bloom_thr5),
+    # --- Reference date: previous winter solstice (Dec 21) ---
+    winter_start_date = as.Date(paste0(season_year - 1, "-12-21")),
+
+    # --- Bloom timing response variables (days since winter solstice) ---
+    delta5  = as.numeric(difftime(bloom_start_thr5_as_date,  winter_start_date, units = "days")),
+    delta15 = as.numeric(difftime(bloom_start_thr15_as_date, winter_start_date, units = "days")),
+    delta25 = as.numeric(difftime(bloom_start_thr25_as_date, winter_start_date, units = "days")),
+
+    # --- Year variables with distinct roles ---
+    # For summaries / tables / bookkeeping only (not used as the model time trend)
+    season_year_f = as.factor(season_year),
+
+    # For location–scale models (mean and sigma trends): centered numeric year
+    TIME = as.numeric(scale(season_year, center = TRUE, scale = FALSE)),
+
+    # Optional: chlorophyll values at detected bloom onset (kept as numeric)
+    value5  = as.numeric(value_at_bloom_thr5),
     value15 = as.numeric(value_at_bloom_thr15),
     value25 = as.numeric(value_at_bloom_thr25)
   ) %>%
-  # To keep the data frame clean, we remove the original columns that have been
-  # transformed and the intermediate helper columns used for the calculation.
-  select( -starts_with("bloom_start_thr"), -winter_start_date)
+  # Drop original date strings and helper date column after transformation
+  select(-starts_with("bloom_start_thr"), -winter_start_date)
 ```
+## Fit Gaussian location–scale models
 
-## Fit Location-Scale Models
+The same Gaussian location–scale model structure was fit to each bloom onset metric (delta5, delta15, delta25), with TIME included in both the location (mean) and scale (residual SD) components.
 
 ```{r}
 #| label: fit-location-scale-models

@@ -6,19 +6,19 @@ toc: false
 title-block-banner: true
 ---
 
-::: {.columns}
-::: {.column width="60%"}
-::: {.lead}
+:::::: columns
+:::: {.column width="60%"}
+::: lead
 This website presents the full reproducible workflow for our study of how increasing environmental unpredictability affects bloom timing, phenological mismatch, and reproductive success in the Blue-footed Booby.
 :::
-:::
+::::
 
 ::: {.column width="40%"}
 ![](images/booby-portrait.jpg){.hero-photo}
 :::
-:::
+::::::
 
-::: {.callout-important}
+::: callout-important
 ## Core idea
 
 Climate change may erode reproductive performance not only by shifting the average timing of environmental events, but by making those events less predictable from year to year.
@@ -28,133 +28,133 @@ Climate change may erode reproductive performance not only by shifting the avera
 
 ### Main analysis
 
-::: {.columns}
-::: {.column width="33%"}
-::: {.grid-card}
+::::::::: columns
+:::: {.column width="33%"}
+::: grid-card
 ### 1. Bloom onset
 
 Definition, extraction, and temporal patterns in bloom timing.
 
 [Open chapter](1-bloom-onset.qmd)
 :::
-:::
+::::
 
-::: {.column width="33%"}
-::: {.grid-card}
+:::: {.column width="33%"}
+::: grid-card
 ### 2. Phenological mismatches
 
 Quantification of mismatch between breeding and marine productivity.
 
 [Open chapter](2-phenological-mismatches.qmd)
 :::
-:::
+::::
 
-::: {.column width="33%"}
-::: {.grid-card}
+:::: {.column width="33%"}
+::: grid-card
 ### 3. Model fitting
 
 Statistical models linking mismatch and reproductive outcomes.
 
 [Open chapter](3-model-fitting.qmd)
 :::
-:::
-:::
+::::
+:::::::::
 
-::: {.columns}
-::: {.column width="50%"}
-::: {.grid-card}
+::::::: columns
+:::: {.column width="50%"}
+::: grid-card
 ### 4. Diagnostics
 
 Model checks, posterior diagnostics, and robustness assessment.
 
 [Open chapter](4-diagnostics.qmd)
 :::
-:::
+::::
 
-::: {.column width="50%"}
-::: {.grid-card}
+:::: {.column width="50%"}
+::: grid-card
 ### 5. Full summaries
 
 Complete model summaries and supporting outputs.
 
 [Open chapter](6-full_summaries.qmd)
 :::
-:::
-:::
+::::
+:::::::
 
 ### Appendices
 
-::: {.columns}
-::: {.column width="33%"}
-::: {.grid-card}
+::::::::: columns
+:::: {.column width="33%"}
+::: grid-card
 ### Sensitivity analyses: Bloom onset thresholds
 
 Alternative bloom definitions and robustness checks.
 
 [Open appendix](sensitivity_blooms.qmd)
 :::
-:::
+::::
 
-::: {.column width="33%"}
-::: {.grid-card}
+:::: {.column width="33%"}
+::: grid-card
 ### Sensitivity analysis: excluding 2015-2016
 
 Robustness of mismatch and nest-success models to the 2015-2016 ENSO years.
 
 [Open appendix](sensitivity_drop_enso.qmd)
 :::
-:::
+::::
 
-::: {.column width="33%"}
-::: {.grid-card}
+:::: {.column width="33%"}
+::: grid-card
 ### Individual mismatch trajectories
 
 Individual random-slope trajectories behind the population-level age trend.
 
 [Open appendix](SI_individual_mismatch_trajectories.qmd)
 :::
-:::
-:::
+::::
+:::::::::
 
-::: {.columns}
-::: {.column width="50%"}
-::: {.grid-card}
+::::::: columns
+:::: {.column width="50%"}
+::: grid-card
 ### Uncertainty in expected fledglings
 
 Posterior credible intervals behind the reported percent decline in nest success.
 
 [Open appendix](estimated-fleds.qmd)
 :::
-:::
+::::
 
-::: {.column width="50%"}
-::: {.grid-card}
+:::: {.column width="50%"}
+::: grid-card
 ### Figure code
 
 Code used to generate figures and visual outputs.
 
 [Open appendix](code_figures.qmd)
 :::
-:::
-:::
+::::
+:::::::
 
 ## Recommended reading path
 
 If you are new to the project, a good sequence is:
 
-1. Bloom onset  
-2. Phenological mismatches  
-3. Model fitting  
-4. Diagnostics  
-5. Full summaries  
+1.  Bloom onset\
+2.  Phenological mismatches\
+3.  Model fitting\
+4.  Diagnostics\
+5.  Full summaries
 
 ## Reproducibility
 
-::: {.callout-note}
+::: callout-note
 All analyses and outputs shown here are generated from the project workflow and linked to the public GitHub repository.
 :::
 
-::: {.lab-affiliation}
+::: lab-affiliation
 ![](images/cossee_logo.png)
 
 This project is carried out within the COSSEE Lab.

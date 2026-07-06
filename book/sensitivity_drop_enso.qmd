@@ -15,6 +15,8 @@ This supplementary analysis evaluates whether the main phenological mismatch and
 #| include: false
 
 library(brms)
+library(dplyr)
+library(ggplot2)
 library(here)
 ```
 
@@ -26,11 +28,122 @@ The descriptive distribution of fledging outcomes by year is reproduced below as
 
 ```{r}
 #| label: fig-drop-enso-fledging-outcomes-reference
-#| echo: false
 #| out-width: "90%"
+#| fig-width: 9
+#| fig-height: 4.8
 #| fig-cap: "Observed fledging outcomes per year for female and male boobies. The sparse 2015-2016 period motivates the supplementary sensitivity analysis excluding those ENSO years."
+#| code-fold: true
+#| code-summary: "Show plotting code"
 
-knitr::include_graphics(here::here("..", "Plots", "fledging_outcomes_per_year.jpg"))
+fledging_outcome_raw <- read.csv(
+  here::here("..", "data", "Lay_date_mismatches_250702.csv")
+)
+
+if (!"YEAR" %in% names(fledging_outcome_raw) &&
+    "X...YEAR" %in% names(fledging_outcome_raw)) {
+  fledging_outcome_raw <- dplyr::rename(fledging_outcome_raw, YEAR = X...YEAR)
+}
+
+stopifnot("YEAR" %in% names(fledging_outcome_raw))
+
+fledging_outcome_data <- fledging_outcome_raw %>%
+  filter(
+    SEX %in% c(0, 1),
+    !is.na(YEAR),
+    !is.na(FLEDS)
+  ) %>%
+  mutate(
+    Year = as.integer(YEAR),
+    Sex_Label = factor(
+      if_else(SEX == 0, "Males", "Females"),
+      levels = c("Females", "Males")
+    ),
+    Fledglings = factor(
+      FLEDS,
+      levels = c(0, 1, 2, 3),
+      labels = c("0 fledglings", "1 fledgling", "2 fledglings", "3 fledglings")
+    )
+  ) %>%
+  count(Sex_Label, Year, Fledglings, name = "records")
+
+fledging_palette <- c(
+  "0 fledglings" = "#355C7D",
+  "1 fledgling" = "#D88C45",
+  "2 fledglings" = "#5B9279",
+  "3 fledglings" = "#8E6C8A"
+)
+
+enso_years <- data.frame(
+  xmin = 2014.5,
+  xmax = 2016.5,
+  ymin = -Inf,
+  ymax = Inf
+)
+
+fledging_outcomes_per_year_plot <- ggplot(
+  fledging_outcome_data,
+  aes(x = Year, y = records, fill = Fledglings)
+) +
+  geom_rect(
+    data = enso_years,
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    inherit.aes = FALSE,
+    fill = "#EAE0D3",
+    alpha = 0.45
+  ) +
+  geom_col(width = 0.82, color = "white", linewidth = 0.18) +
+  facet_wrap(~ Sex_Label, ncol = 1) +
+  scale_x_continuous(
+    breaks = seq(
+      min(fledging_outcome_data$Year),
+      max(fledging_outcome_data$Year),
+      by = 2
+    ),
+    minor_breaks = seq(
+      min(fledging_outcome_data$Year),
+      max(fledging_outcome_data$Year),
+      by = 1
+    ),
+    expand = expansion(mult = c(0.01, 0.02))
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  scale_fill_manual(name = NULL, values = fledging_palette, drop = FALSE) +
+  labs(
+    x = "Year",
+    y = "Breeding records"
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(
+    legend.position = "bottom",
+    legend.justification = "center",
+    legend.key.width = grid::unit(0.9, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "#E6E0D8", linewidth = 0.35),
+    strip.text = element_text(face = "bold", hjust = 0, size = 11),
+    axis.title = element_text(color = "#2F2F2F"),
+    axis.text = element_text(color = "#3E3E3E"),
+    plot.margin = margin(5.5, 8, 5.5, 5.5)
+  )
+
+ggsave(
+  filename = here::here("..", "Plots", "fledging_outcomes_per_year.pdf"),
+  plot = fledging_outcomes_per_year_plot,
+  width = 9,
+  height = 4.8,
+  dpi = 300,
+  device = cairo_pdf
+)
+
+ggsave(
+  filename = here::here("..", "Plots", "fledging_outcomes_per_year.jpg"),
+  plot = fledging_outcomes_per_year_plot,
+  width = 9,
+  height = 4.8,
+  dpi = 300
+)
+
+fledging_outcomes_per_year_plot
 ```
 
 ## Sensitivity model formulas
@@ -123,7 +236,7 @@ summary(male_mismatch_drop_enso)
 
 ```{r}
 #| label: summary-drop-enso-nest-success-female
-#| eval: false
+#| eval: true
 
 female_nest_success_drop_enso <- readRDS(
   here::here("..", "Rdata", "drop_enso_2015_2016", "female_fledging_Q17_drop_2015_2016.rds")
@@ -134,7 +247,7 @@ summary(female_nest_success_drop_enso)
 
 ```{r}
 #| label: summary-drop-enso-nest-success-male
-#| eval: false
+#| eval: true
 
 male_nest_success_drop_enso <- readRDS(
   here::here("..", "Rdata", "drop_enso_2015_2016", "male_fledging_Q17_drop_2015_2016.rds")

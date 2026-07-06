@@ -45,7 +45,7 @@ The figure below provides geographic context for Isla Isabel, Mexico, showing th
 ```{r}
 #| label: fig-isla-isabel-map
 #| fig-width: 10
-#| fig-height: 8
+#| fig-height: 6.7
 #| fig-cap: "Location of Isla Isabel, Mexico, and the focal extraction polygon used to derive chlorophyll-a time series. The main panel shows the broader eastern tropical Pacific and adjacent landmass, whereas the inset shows Isla Isabel and the extraction area in detail."
 #| code-fold: true
 #| code-summary: "Show code"
@@ -69,62 +69,149 @@ marker_point_sf <- st_sfc(marker_point_sf, crs = 4326)
 world <- ne_countries(scale = "medium", returnclass = "sf")
 coastlines <- ne_coastline(scale = "medium", returnclass = "sf")
 
-# Create points for country labels
-world_points <- cbind(world, st_coordinates(st_centroid(world$geometry)))
+main_map_labels <- tibble::tribble(
+  ~label, ~lon, ~lat, ~fontface, ~color, ~size, ~angle,
+  "Mexico", -102.7, 23.0, "bold", "#253642", 5.0, 0,
+  "Pacific Ocean", -116.6, 17.0, "italic", "#477487", 4.8, 0,
+  "Gulf of California", -111.4, 27.7, "italic", "#477487", 3.7, -45,
+  "Gulf of Mexico", -94.2, 25.0, "italic", "#477487", 4.4, 0
+)
+
+island_callout <- data.frame(
+  x = -110.2,
+  y = 19.5,
+  xend = marker_lon_deg,
+  yend = marker_lat_deg,
+  label = "Isla Isabel"
+)
+
+ocean_fill <- "#DDECF1"
+land_fill <- "#F1DFC2"
+land_line <- "#B9B2A6"
+accent <- "#D95538"
+accent_dark <- "#8E2D24"
+polygon_fill <- "#2BA7A5"
+ink <- "#253642"
 
 # --- Main Map (Zoomed Out - Pacific Coast) ---
 main_map <- ggplot() +
-  # TYPO FIX: Changed "antiquhite" to "antiquewhite"
-  geom_sf(data = world, fill = "antiquewhite", color = "darkgray") +
-  geom_sf(data = coastlines, color = "grey", size = 0.5) +
-  geom_sf(data = st_as_sfc(st_bbox(polygon_sf)), fill = NA, color = "red", size = 1) +
-  geom_text(data = world_points, aes(x = X, y = Y, label = name),
-            color = "black", size = 3.5, fontface = "bold", check_overlap = TRUE) +
-  annotate(geom = "text", x = -90, y = 25, label = "Gulf of Mexico",
-           fontface = "italic", color = "steelblue4", size = 5) +
-  coord_sf(xlim = c(-125, -85), ylim = c(12, 35), expand = FALSE) +
-  labs(title = "", x = "Longitude (°W)", y = "Latitude (°N)") +
-  theme_bw() +
+  geom_sf(data = world, fill = land_fill, color = land_line, linewidth = 0.25) +
+  geom_sf(data = coastlines, color = "#9FA9AA", linewidth = 0.35) +
+  geom_sf(
+    data = st_as_sfc(st_bbox(polygon_sf)),
+    fill = "#F4B05E",
+    alpha = 0.22,
+    color = accent,
+    linewidth = 1.1
+  ) +
+  geom_curve(
+    data = island_callout,
+    aes(x = x, y = y, xend = xend, yend = yend),
+    curvature = -0.2,
+    linewidth = 0.45,
+    color = accent_dark,
+    arrow = grid::arrow(length = grid::unit(0.08, "in"))
+  ) +
+  geom_label(
+    data = island_callout,
+    aes(x = x, y = y, label = label),
+    fill = "white",
+    color = ink,
+    label.size = 0,
+    label.padding = grid::unit(0.13, "lines"),
+    fontface = "bold",
+    size = 4
+  ) +
+  geom_text(
+    data = main_map_labels,
+    aes(
+      x = lon,
+      y = lat,
+      label = label,
+      fontface = fontface,
+      color = color,
+      size = size,
+      angle = angle
+    ),
+    show.legend = FALSE
+  ) +
+  scale_color_identity() +
+  scale_size_identity() +
+  scale_x_continuous(labels = function(x) paste0(abs(x), "\u00B0W")) +
+  scale_y_continuous(labels = function(y) paste0(y, "\u00B0N")) +
+  coord_sf(xlim = c(-119, -88), ylim = c(13, 33.5), expand = FALSE) +
+  theme_minimal(base_size = 11) +
+  labs(x = "Longitude", y = "Latitude") +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    axis.title = element_text(face = "bold"),
-    panel.grid.major = element_line(color = "lightgray", linetype = "dashed"),
-    panel.background = element_rect(fill = "aliceblue")
+    panel.background = element_rect(fill = ocean_fill, color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.grid.major = element_line(color = "white", linewidth = 0.45),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "#7F8B8D", fill = NA, linewidth = 0.6),
+    axis.title = element_text(face = "bold", color = ink),
+    axis.text = element_text(color = "#465A60"),
+    plot.margin = margin(6, 6, 6, 6)
   )
 
 # --- Inset Map (Zoomed In on Isla Isabel) ---
 inset_map <- ggplot() +
-  geom_sf(data = world, fill = "antiquewhite", color = "darkgray") +
-  geom_sf(data = coastlines, color = "grey", size = 0.5) +
-  geom_sf(data = polygon_sf, fill = "blue", alpha = 0.5, color = "darkblue", size = 1) +
-  geom_sf(data = marker_point_sf, color = "red", size = 4, shape = 17) +
-  geom_text(data = marker_point_df, aes(x = lon, y = lat), label = "Isla Isabel", hjust = 0.5, vjust = -5.5, color = "black", fontface = "bold", size = 6) +
-  annotation_scale(location = "bl", width_hint = 0.2) +
+  geom_sf(data = world, fill = land_fill, color = land_line, linewidth = 0.25) +
+  geom_sf(data = coastlines, color = "#9FA9AA", linewidth = 0.35) +
+  geom_sf(
+    data = polygon_sf,
+    fill = polygon_fill,
+    alpha = 0.22,
+    color = "#147C82",
+    linewidth = 1.15
+  ) +
+  geom_sf(data = marker_point_sf, color = "white", size = 5.4, shape = 21, stroke = 1.4) +
+  geom_sf(data = marker_point_sf, fill = accent, color = accent_dark, size = 3.7, shape = 21, stroke = 0.8) +
+  geom_label(
+    data = marker_point_df,
+    aes(x = lon, y = lat),
+    label = "Isla Isabel",
+    nudge_y = 0.19,
+    fill = "white",
+    color = ink,
+    label.size = 0,
+    label.padding = grid::unit(0.13, "lines"),
+    fontface = "bold",
+    size = 4
+  ) +
+  annotation_scale(location = "br", width_hint = 0.24, text_cex = 0.7) +
   annotation_north_arrow(
-    location = "bl", which_north = "true",
-    pad_x = unit(0.09, "in"), pad_y = unit(0.3, "in"),
+    location = "tl",
+    which_north = "true",
+    pad_x = grid::unit(0.12, "in"),
+    pad_y = grid::unit(0.12, "in"),
     style = north_arrow_fancy_orienteering
   ) +
   coord_sf(
-    xlim = c(marker_lon_deg - 0.5, marker_lon_deg + 0.5),
-    ylim = c(marker_lat_deg - 0.5, marker_lat_deg + 0.5),
+    xlim = c(marker_lon_deg - 0.58, marker_lon_deg + 0.58),
+    ylim = c(marker_lat_deg - 0.48, marker_lat_deg + 0.48),
     expand = FALSE
   ) +
-  theme_bw() +
+  theme_void(base_size = 10) +
   theme(
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 1)
+    panel.background = element_rect(fill = ocean_fill, color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.border = element_rect(color = ink, fill = NA, linewidth = 0.9),
+    plot.margin = margin(3, 3, 3, 3)
   )
 
 # --- Combine Maps using cowplot ---
-mapIS<-ggdraw() +
+mapIS <- ggdraw() +
   draw_plot(main_map) +
-  draw_plot(inset_map, x = 0.05, y = 0.15, width = 0.38, height = 0.38)
+  draw_plot(inset_map, x = 0.055, y = 0.09, width = 0.43, height = 0.43) +
+  draw_label(
+    "Chlorophyll-a extraction area",
+    x = 0.105,
+    y = 0.54,
+    hjust = 0,
+    fontface = "bold",
+    size = 12,
+    color = ink
+  )
 
 ```
 
@@ -135,16 +222,19 @@ mapIS
 
 ```{r}
 #| label: save_map
-#| eval: false
+#| echo: false
 
 ggsave(filename = here("..","Plots", "Map_Isla_Isabel.pdf"),
        plot = mapIS,
-       dpi = 300, device = cairo_pdf)
+       width = 10,
+       height = 6.7,
+       dpi = 300,
+       device = cairo_pdf)
 
 ggsave(filename = here("..","Plots", "Map_Isla_Isabel.jpg"),
        plot = mapIS,
-       width = 7,  
-       height = 7,  
+       width = 10,
+       height = 6.7,
        dpi = 300)
 ```
 
@@ -179,11 +269,11 @@ CHL_df <- CHL_df %>%
 
 The same detection logic was applied under both seasonal-window definitions:
 
--   **Seasonal window:** either Winter–Spring (21 December–20 June) or Autumn–Spring (21 September–20 June)
--   **Baseline:** the median chlorophyll-a concentration within each seasonal window
--   **Thresholds:** 5%, 15%, 25%, and 30% above the seasonal median
--   **Sustained increase criterion:** the first day for which two consecutive 7-day rolling medians exceeded the threshold
--   **Output:** bloom onset date, chlorophyll-a value at onset, and the threshold value for that season
+- **Seasonal window:** either Winter–Spring (21 December–20 June) or Autumn–Spring (21 September–20 June)
+- **Baseline:** the median chlorophyll-a concentration within each seasonal window
+- **Thresholds:** 5%, 15%, 25%, and 30% above the seasonal median
+- **Sustained increase criterion:** the first day for which two consecutive 7-day rolling medians exceeded the threshold
+- **Output:** bloom onset date, chlorophyll-a value at onset, and the threshold value for that season
 
 ::: panel-tabset
 ## Winter–Spring window

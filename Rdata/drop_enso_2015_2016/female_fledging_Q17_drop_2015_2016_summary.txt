@@ -1,0 +1,43 @@
+ Family: cumulative 
+  Links: mu = probit; disc = log 
+Formula: FLEDS ~ ZX5MISMATCH + I(ZX5MISMATCH^2) + TIME + AGE + I(AGE^2) + AFR + LONGEVITY + (1 | q | RING) + (1 | YEAR) 
+         disc ~ 1 + ZX5MISMATCH + AGE + TIME + (1 | q | RING)
+   Data: data (Number of observations: 8213) 
+  Draws: 4 chains, each with iter = 6000; warmup = 2000; thin = 1;
+         total post-warmup draws = 16000
+
+Multilevel Hyperparameters:
+~RING (Number of levels: 2557) 
+                              Estimate Est.Error l-95% CI u-95% CI Rhat
+sd(Intercept)                     1.87      0.77     0.80     3.76 1.00
+sd(disc_Intercept)                0.09      0.03     0.02     0.15 1.00
+cor(Intercept,disc_Intercept)    -0.64      0.29    -0.99     0.07 1.00
+                              Bulk_ESS Tail_ESS
+sd(Intercept)                     1743     2519
+sd(disc_Intercept)                2078     2041
+cor(Intercept,disc_Intercept)     2450     4410
+
+~YEAR (Number of levels: 19) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     4.61      1.95     1.94     9.41 1.00     1903     3348
+
+Regression Coefficients:
+                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]        -4.64      2.01    -9.49    -1.72 1.00     2004     3491
+Intercept[2]         5.20      2.57     1.80    11.60 1.00     1829     2721
+Intercept[3]        17.35      7.23     7.33    35.13 1.00     1672     2372
+disc_Intercept      -1.89      0.38    -2.64    -1.12 1.00     1657     2318
+ZX5MISMATCH         -0.18      0.07    -0.36    -0.08 1.00     1665     2374
+IZX5MISMATCHE2      -0.00      0.00    -0.00    -0.00 1.00     2134     3450
+TIME                -0.38      0.23    -0.93    -0.03 1.00     2703     3546
+AGE                  0.36      0.15     0.15     0.73 1.00     1779     2492
+IAGEE2              -0.08      0.03    -0.15    -0.03 1.00     1706     2559
+AFR                 -0.37      0.17    -0.79    -0.14 1.00     2062     2945
+LONGEVITY            0.02      0.04    -0.05     0.10 1.00    12270     6001
+disc_ZX5MISMATCH    -0.00      0.00    -0.00    -0.00 1.00     6704    10282
+disc_AGE            -0.00      0.00    -0.01     0.01 1.00    22167    14131
+disc_TIME           -0.02      0.00    -0.02    -0.01 1.00    14128    11963
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).

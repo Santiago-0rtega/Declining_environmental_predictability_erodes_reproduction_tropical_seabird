@@ -2,8 +2,6 @@
 title: "Expected fledglings"
 ---
 
-
-
 ```{r}
 #| label: setup-final-summaries
 #| include: false
@@ -12,30 +10,18 @@ title: "Expected fledglings"
 pacman::p_load(here, brms, tidyverse)
 ```
 
-
-
-
 ```{r}
 fit_ord <- readRDS(here::here("..","Rdata", "female_fit_Q17.rds"))
 ```
-
-
-
-
-
-
 
 ```{r}
 range(fit_ord$data$TIME)
 ```
 
-
 ```{r}
 time_early <- -8.643948
 time_late  <-  11.356052
 ```
-
-
 
 ```{r}
 newdat <- tibble(
@@ -46,8 +32,6 @@ newdat <- tibble(
   LONGEVITY   = c(0, 0)
 )
 ```
-
-
 
 ```{r}
 # ---- 3) Posterior predicted category probabilities ----
@@ -86,6 +70,3 @@ summary_tbl <- tibble(
 
 print(summary_tbl)
 ```
-
-
-

@@ -458,39 +458,6 @@
     ]
   },
   {
-    "objectID": "SI_individual_mismatch_trajectories.html#population-level-age-trend",
-    "href": "SI_individual_mismatch_trajectories.html#population-level-age-trend",
-    "title": "Individual mismatch trajectories with age",
-    "section": "Population-level age trend",
-    "text": "Population-level age trend\nThe population-level (fixed-effect only, re_formula = NA) predicted mismatch trajectory is used as the backdrop for the individual trajectories.\n\n\nFemales\nMales\n\n\n\n\nShow population-level trend codeage_draws_female &lt;- read_precomputed_draw(\"age_draws_female.rds\")\n\n\n\n\n\nShow population-level trend codeage_draws_male &lt;- read_precomputed_draw(\"age_draws_male.rds\")",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Individual mismatch trajectories with age</span>"
-    ]
-  },
-  {
-    "objectID": "SI_individual_mismatch_trajectories.html#individual-random-slope-trajectories",
-    "href": "SI_individual_mismatch_trajectories.html#individual-random-slope-trajectories",
-    "title": "Individual mismatch trajectories with age",
-    "section": "Individual random-slope trajectories",
-    "text": "Individual random-slope trajectories\nFifty individuals are randomly sampled per sex. Each sampled individual’s expected trajectory is evaluated over the full population age grid (not limited to that bird’s own observation window), so the lines show the model-implied trajectory each individual’s random intercept and age slope predict across the full age range. Predictions include both the individual-level intercept and age slope (re_formula = ~(1 + AGE | RING)).\n\n\nFemales\nMales\n\n\n\n\nShow individual trajectory codeindividual_predictions_female &lt;- read_precomputed_draw(\"individual_predictions_female_si.rds\")\n\n\n\n\n\nShow individual trajectory codeindividual_predictions_male &lt;- read_precomputed_draw(\"individual_predictions_male_si.rds\")",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Individual mismatch trajectories with age</span>"
-    ]
-  },
-  {
-    "objectID": "SI_individual_mismatch_trajectories.html#plot-construction",
-    "href": "SI_individual_mismatch_trajectories.html#plot-construction",
-    "title": "Individual mismatch trajectories with age",
-    "section": "Plot construction",
-    "text": "Plot construction\nEach panel shows the population-level trend (ribbon + black line) with the 50 sampled individual trajectories overlaid as coloured lines.\n\nShow plot codeplot_ind_female &lt;- ggplot() +\n  stat_lineribbon(data = age_draws_female, aes(x = actual_age, y = .epred),\n                  .width = 0.95, alpha = 0.3, fill = \"#a0786e\") +\n  stat_lineribbon(data = age_draws_female, aes(x = actual_age, y = .epred),\n                  fill = NA, color = \"black\", linewidth = 1) +\n  geom_line(data = individual_predictions_female,\n            aes(x = actual_age, y = .value, group = RING, color = factor(RING)),\n            linewidth = 0.7, alpha = 0.9,linetype=\"dashed\") +\n  scale_x_continuous(breaks = seq(1, 23, 2), limits = c(1, 23), guide = guide_axis(minor.ticks = TRUE)) +\n  scale_y_continuous(breaks = seq(-90, 210, 30), minor_breaks = seq(-90, 210, 15), limits = c(-90, 210), guide = guide_axis(minor.ticks = TRUE)) +\n  labs(\n    subtitle = \"Females\",\n    y = \"Phenological mismatch (days)\",\n    x = \"Age (years)\"\n  ) +\n  custom_theme() +\n  theme(legend.position = \"none\", plot.subtitle = element_text(face = \"bold\"))\n\nplot_ind_male &lt;- ggplot() +\n  stat_lineribbon(data = age_draws_male, aes(x = actual_age, y = .epred),\n                  .width = 0.95, alpha = 0.3, fill = \"#a0786e\") +\n  stat_lineribbon(data = age_draws_male, aes(x = actual_age, y = .epred),\n                  fill = NA, color = \"black\", linewidth = 1) +\n  geom_line(data = individual_predictions_male,\n            aes(x = actual_age, y = .value, group = RING, color = factor(RING)),\n            linewidth = 0.7, alpha = 0.9,linetype=\"dashed\") +\n  scale_x_continuous(breaks = seq(1, 23, 2), limits = c(1, 23), guide = guide_axis(minor.ticks = TRUE)) +\n  scale_y_continuous(breaks = seq(-90, 210, 30), minor_breaks = seq(-90, 210, 15), limits = c(-90, 210), guide = guide_axis(minor.ticks = TRUE)) +\n  labs(\n    subtitle = \"Males\",\n    y = \"Phenological mismatch (days)\",\n    x = \"Age (years)\"\n  ) +\n  custom_theme() +\n  theme(legend.position = \"none\", plot.subtitle = element_text(face = \"bold\"))",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Individual mismatch trajectories with age</span>"
-    ]
-  },
-  {
     "objectID": "SI_individual_mismatch_trajectories.html#combined-figure",
     "href": "SI_individual_mismatch_trajectories.html#combined-figure",
     "title": "Individual mismatch trajectories with age",

@@ -45,7 +45,7 @@ book:
     right:
       - text: "GitHub"
         icon: github
-        href: https://santiago-0rtega.github.io/Declining_environmental_predictability_erodes_reproduction_tropical_seabird/
+        href: https://github.com/Santiago-0rtega/Declining_environmental_predictability_erodes_reproduction_tropical_seabird/
       - text: "References"
         href: references.qmd
 
@@ -57,7 +57,7 @@ book:
 
   page-navigation: true
   reader-mode: true
-  repo-url: https://santiago-0rtega.github.io/Declining_environmental_predictability_erodes_reproduction_tropical_seabird/
+  repo-url: https://github.com/Santiago-0rtega/Declining_environmental_predictability_erodes_reproduction_tropical_seabird/
   repo-actions: [source, issue]
 
 

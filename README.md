@@ -2,7 +2,7 @@
 
 This repository contains the data, code, and reproducible analysis website for the manuscript:
 
-**Declining environmental predictability erodes reproduction in a tropical seabird[**
+**Declining environmental predictability erodes reproduction in a tropical seabird**
 
 
 

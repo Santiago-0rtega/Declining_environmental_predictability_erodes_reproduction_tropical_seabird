@@ -35,10 +35,12 @@ book:
     - part: "Appendices"
       chapters:
         - sensitivity_blooms.qmd
+        - sensitivity_mismatch.qmd
         - sensitivity_drop_enso.qmd
         - SI_individual_mismatch_trajectories.qmd
         - estimated-fleds.qmd
         - code_figures.qmd
+    - references.qmd
 
   navbar:
     pinned: true

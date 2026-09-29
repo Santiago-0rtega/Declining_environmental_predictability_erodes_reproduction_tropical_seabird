@@ -141,7 +141,7 @@ plot_estimated_fleds_violin <- ggplot(endpoints_all, aes(x = year, y = expected_
 ggsave(
   here::here("..", "Plots", "estimated_fledglings_violin.pdf"),
   plot_estimated_fleds_violin,
-  width = 8, height = 5
+  width = 8, height = 5, device = cairo_pdf  # embed fonts
 )
 ggsave(
   here::here("..", "Plots", "estimated_fledglings_violin.jpg"),

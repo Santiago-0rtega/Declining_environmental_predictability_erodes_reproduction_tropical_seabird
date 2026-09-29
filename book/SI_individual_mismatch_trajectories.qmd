@@ -221,8 +221,9 @@ plot_ind_female <- ggplot() +
   geom_line(data = individual_predictions_female,
             aes(x = actual_age, y = .value, group = RING, color = factor(RING)),
             linewidth = 0.7, alpha = 0.9, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1, 23, 2), limits = c(1, 23), guide = guide_axis(minor.ticks = TRUE)) +
-  scale_y_continuous(breaks = seq(-90, 210, 30), minor_breaks = seq(-90, 210, 15), limits = c(-90, 210), guide = guide_axis(minor.ticks = TRUE)) +
+  scale_x_continuous(breaks = seq(1, 23, 2),  guide = guide_axis(minor.ticks = TRUE)) +
+  scale_y_continuous(breaks = seq(-90, 210, 30), minor_breaks = seq(-90, 210, 15),  guide = guide_axis(minor.ticks = TRUE)) +
+  coord_cartesian(xlim = c(1, 23), ylim = c(-90, 210)) +
   labs(
     subtitle = "Females",
     y = "Phenological mismatch (days)",
@@ -239,8 +240,9 @@ plot_ind_male <- ggplot() +
   geom_line(data = individual_predictions_male,
             aes(x = actual_age, y = .value, group = RING, color = factor(RING)),
             linewidth = 0.7, alpha = 0.9, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1, 23, 2), limits = c(1, 23), guide = guide_axis(minor.ticks = TRUE)) +
-  scale_y_continuous(breaks = seq(-90, 210, 30), minor_breaks = seq(-90, 210, 15), limits = c(-90, 210), guide = guide_axis(minor.ticks = TRUE)) +
+  scale_x_continuous(breaks = seq(1, 23, 2),  guide = guide_axis(minor.ticks = TRUE)) +
+  scale_y_continuous(breaks = seq(-90, 210, 30), minor_breaks = seq(-90, 210, 15),  guide = guide_axis(minor.ticks = TRUE)) +
+  coord_cartesian(xlim = c(1, 23), ylim = c(-90, 210)) +
   labs(
     subtitle = "Males",
     y = "Phenological mismatch (days)",
@@ -256,7 +258,7 @@ fig_SI_individual_trajectories <- plot_ind_female + plot_ind_male +
 ggsave(
   here("..", "Plots", "SI_individual_mismatch_trajectories.pdf"),
   fig_SI_individual_trajectories,
-  width = 10, height = 5
+  width = 10, height = 5, device = cairo_pdf  # embeds Arial; base pdf() drops the text
 )
 ggsave(
   here("..", "Plots", "SI_individual_mismatch_trajectories.jpg"),

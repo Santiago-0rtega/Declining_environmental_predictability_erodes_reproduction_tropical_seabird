@@ -21,7 +21,9 @@
 # model panel and written to source_data/_export_checks.csv.
 #
 # Usage (from the repository root, or from book/):
-#   Rscript Rscripts/export_source_data.R [repo_root] [output_dir]
+#   Rscript Rscripts/export_source_data.R [repo_root] [output_dir] [limit_mode]
+#   limit_mode = "scale" (default; matches current figure code) or "coord"
+#   (use after the figures switch to coord_cartesian zooming).
 # -----------------------------------------------------------------------------
 
 suppressPackageStartupMessages({
@@ -37,6 +39,16 @@ args <- commandArgs(trailingOnly = TRUE)
 repo_root <- if (length(args) >= 1) args[[1]] else if (dir.exists("Rdata")) "." else ".."
 repo_root <- normalizePath(repo_root, winslash = "/")
 out_root  <- if (length(args) >= 2) args[[2]] else file.path(repo_root, "source_data")
+# How the figure code applies axis limits when rebuilding the rendered layers:
+#   "scale" = scale_[xy]_continuous(limits = ...) as in the current figure code
+#             (ggplot2 drops out-of-range draws BEFORE stat_lineribbon summarises);
+#   "coord" = coord_cartesian(xlim, ylim) zoom (no draws dropped).
+# Switch to "coord" (3rd argument or env var SOURCE_DATA_LIMIT_MODE) once the
+# figures are changed to zoom rather than censor; the full-posterior columns
+# are unaffected by this setting.
+limit_mode <- if (length(args) >= 3) args[[3]] else Sys.getenv("SOURCE_DATA_LIMIT_MODE", "scale")
+stopifnot(limit_mode %in% c("scale", "coord"))
+message("Axis-limit mode for rendered-layer rebuild: ", limit_mode)
 
 data_dir  <- file.path(repo_root, "data")
 model_dir <- file.path(repo_root, "Rdata")
@@ -104,9 +116,13 @@ check_ribbon <- function(label, draws, x, y, export, x_name = x, group = NULL,
   map <- if (is.null(group)) aes(x = .data[[x]], y = .data[[y]]) else
     aes(x = .data[[x]], y = .data[[y]], fill = .data[[group]], group = .data[[group]])
   p <- ggplot() + stat_lineribbon(data = d, mapping = map, .width = 0.95)
-  if (!is.null(xlim)) p <- p + scale_x_continuous(limits = xlim)
-  if (!is.null(ylim)) p <- p + scale_y_continuous(limits = ylim)
-  n_oob <- sum(!within_lim(d[[y]], ylim) & !is.na(d[[y]])) +
+  if (limit_mode == "scale") {
+    if (!is.null(xlim)) p <- p + scale_x_continuous(limits = xlim)
+    if (!is.null(ylim)) p <- p + scale_y_continuous(limits = ylim)
+  } else {
+    p <- p + coord_cartesian(xlim = xlim, ylim = ylim)
+  }
+  n_oob <- if (limit_mode == "coord") 0L else sum(!within_lim(d[[y]], ylim) & !is.na(d[[y]])) +
     sum(!within_lim(d[[x]], xlim) & !is.na(d[[x]]))
   built <- suppressWarnings(ggplot_build(p))$data[[1]]
   built <- built[built$.width == 0.95 | is.na(built$.width), ]
@@ -124,24 +140,40 @@ check_ribbon <- function(label, draws, x, y, export, x_name = x, group = NULL,
     built %>% transmute(grp_label, xk = round(x, 9), y, ymin, ymax),
     by = c("grp_label", "xk")
   )
+  # Draws per x that survive the axis-limit censoring (what the stat actually used)
+  kept <- d %>%
+    mutate(in_lim = if (limit_mode == "coord") !is.na(.data[[y]]) else within_lim(.data[[y]], ylim)) %>%
+    group_by(grp_label = if (is.null(group)) "all" else as.character(.data[[group]]),
+             xk = round(.data[[x]], 9)) %>%
+    summarise(n_draws_within_axis_limits = sum(in_lim), .groups = "drop")
   res <- data.frame(
     panel = label,
     exported_rows_in_x_limits = nrow(ex),
     drawn_rows = nrow(built),
     matched_rows = nrow(j),
     draws_outside_axis_limits = n_oob,
-    max_abs_diff_median = max(abs(j$posterior_median - j$y), na.rm = TRUE),
-    max_abs_diff_lower = max(abs(j$lower_95 - j$ymin), na.rm = TRUE),
-    max_abs_diff_upper = max(abs(j$upper_95 - j$ymax), na.rm = TRUE),
+    max_abs_diff_full_vs_drawn_median = max(abs(j$posterior_median - j$y), na.rm = TRUE),
+    max_abs_diff_full_vs_drawn_lower = max(abs(j$lower_95 - j$ymin), na.rm = TRUE),
+    max_abs_diff_full_vs_drawn_upper = max(abs(j$upper_95 - j$ymax), na.rm = TRUE),
     n_drawn_NA = sum(is.na(j$y) | is.na(j$ymin) | is.na(j$ymax))
   )
   check_log[[length(check_log) + 1]] <<- res
   message(sprintf("  check %-8s matched %d/%d, max|diff| median=%.3g lower=%.3g upper=%.3g, OOB draws=%d",
                   label, res$matched_rows, res$exported_rows_in_x_limits,
-                  res$max_abs_diff_median, res$max_abs_diff_lower,
-                  res$max_abs_diff_upper, n_oob))
-  invisible(res)
+                  res$max_abs_diff_full_vs_drawn_median, res$max_abs_diff_full_vs_drawn_lower,
+                  res$max_abs_diff_full_vs_drawn_upper, n_oob))
+  # Return the export augmented with the values actually rendered by
+  # stat_lineribbon under the figure's axis limits.
+  export %>%
+    mutate(grp_label = if (is.null(group)) "all" else as.character(.data[[group]]),
+           xk = round(.data[[x_name]], 9)) %>%
+    left_join(built %>% transmute(grp_label, xk = round(x, 9),
+                                  drawn_median = y, drawn_lower_95 = ymin, drawn_upper_95 = ymax),
+              by = c("grp_label", "xk")) %>%
+    left_join(kept, by = c("grp_label", "xk")) %>%
+    select(-grp_label, -xk)
 }
+
 
 flag_points <- function(df, x, y, xlim = NULL, ylim = NULL) {
   df %>% mutate(within_axis_limits = within_lim(.data[[x]], xlim) & within_lim(.data[[y]], ylim))
@@ -259,6 +291,9 @@ LIM_AGE  <- c(1, 23)
 LIM_MM   <- c(-90, 210)
 LIM_SIG  <- c(0, 150)
 LIM_P    <- c(0, 1)
+LIM_BLOOM_MEAN  <- c(0, 60)   # Fig. 2A y-axis
+LIM_BLOOM_SIGMA <- c(0, 100)  # Fig. 2B y-axis
+LIM_ZETA        <- c(0, 0.5)  # Fig. 2F / ED Fig. 4D y-axis
 
 # =============================================================================
 # Temporal panels (Fig. 2 females; Extended Data Fig. 4 males)
@@ -271,39 +306,39 @@ export_temporal <- function(sex, fig, labs) {
 
   mt <- read_precomputed_draw(paste0("mismatch_time_draws", sfx, ".rds"))
   s <- summarise_ribbon(mt, "actual_time", ".epred", x_name = "year")
-  write_panel(s, fig, paste0(labs["mm"], "_mismatch_mean.csv"))
-  check_ribbon(paste(fig, labs["mm"]), mt, "actual_time", ".epred", s, "year", ylim = LIM_MM)
+  s <- check_ribbon(paste(fig, labs["mm"]), mt, "actual_time", ".epred", s, "year", ylim = LIM_MM)
   write_panel(count_mismatch(dmis, "ori_time") %>%
                 rename(year = ori_time, mismatch_days = X5MISMATCH, n_records = n) %>%
                 flag_points("year", "mismatch_days", ylim = LIM_MM),
               fig, paste0(labs["mm"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["mm"], "_mismatch_mean.csv"))
 
   s <- summarise_ribbon(mt, "actual_time", "sigma", x_name = "year")
-  write_panel(s, fig, paste0(labs["sd"], "_mismatch_sigma.csv"))
-  check_ribbon(paste(fig, labs["sd"]), mt, "actual_time", "sigma", s, "year", ylim = LIM_SIG)
+  s <- check_ribbon(paste(fig, labs["sd"]), mt, "actual_time", "sigma", s, "year", ylim = LIM_SIG)
   write_panel(count_sigma(dres, "ori_time") %>%
                 rename(year = ori_time, abs_residual_days = raw_sigma, n_records = n) %>%
                 flag_points("year", "abs_residual_days", ylim = LIM_SIG),
               fig, paste0(labs["sd"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["sd"], "_mismatch_sigma.csv"))
   rm(mt); invisible(gc())
 
   fs <- read_precomputed_draw(paste0("fledging_success_draws", sfx, ".rds"))
   s <- summarise_ribbon(fs, "actual_time", "prob_success", x_name = "year")
-  write_panel(s, fig, paste0(labs["ns"], "_nest_success.csv"))
-  check_ribbon(paste(fig, labs["ns"]), fs, "actual_time", "prob_success", s, "year", ylim = LIM_P)
+  s <- check_ribbon(paste(fig, labs["ns"]), fs, "actual_time", "prob_success", s, "year", ylim = LIM_P)
   write_panel(success_props(dfl, "ori_time") %>%
                 transmute(year = ori_time, n_successful = n, n_records_year = total_n_year,
                           proportion_successful = proportion) %>%
                 flag_points("year", "proportion_successful", ylim = LIM_P),
               fig, paste0(labs["ns"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["ns"], "_nest_success.csv"))
   rm(fs); invisible(gc())
 
   # Zeta panel: the figure passes the category-level draw frame (4 identical
   # disc values per draw); summarised on the same frame so values match.
   ft <- read_precomputed_draw(paste0("fledging_time_draws", sfx, ".rds"))
   s <- summarise_ribbon(ft, "actual_time", "disc", x_name = "year")
+  s <- check_ribbon(paste(fig, labs["zeta"]), ft, "actual_time", "disc", s, "year", ylim = LIM_ZETA)
   write_panel(s, fig, paste0(labs["zeta"], "_zeta.csv"))
-  check_ribbon(paste(fig, labs["zeta"]), ft, "actual_time", "disc", s, "year", ylim = c(0, 0.5))
   rm(ft); invisible(gc())
 }
 
@@ -312,16 +347,16 @@ message("Fig. 2")
 fig <- "Fig2"
 bt <- read_precomputed_draw("bloom_time_draws.rds")
 s <- summarise_ribbon(bt, "actual_year", ".epred", x_name = "year")
+s <- check_ribbon("Fig2 Fig2A", bt, "actual_year", ".epred", s, "year", ylim = LIM_BLOOM_MEAN)
 write_panel(s, fig, "Fig2A_bloom_onset_mean.csv")
-check_ribbon("Fig2 A", bt, "actual_year", ".epred", s, "year", ylim = c(0, 60))
 write_panel(bloom_dat %>% transmute(year = season_year, bloom_onset_days = delta5) %>%
-              flag_points("year", "bloom_onset_days", ylim = c(0, 60)),
+              flag_points("year", "bloom_onset_days", ylim = LIM_BLOOM_MEAN),
             fig, "Fig2A_points.csv")
 s <- summarise_ribbon(bt, "actual_year", "sigma", x_name = "year")
+s <- check_ribbon("Fig2 Fig2B", bt, "actual_year", "sigma", s, "year", ylim = LIM_BLOOM_SIGMA)
 write_panel(s, fig, "Fig2B_bloom_timing_sigma.csv")
-check_ribbon("Fig2 B", bt, "actual_year", "sigma", s, "year", ylim = c(0, 50))
 write_panel(dat_with_residuals_bloom %>% transmute(year = season_year, abs_residual_days = raw_sigma) %>%
-              flag_points("year", "abs_residual_days", ylim = c(0, 50)),
+              flag_points("year", "abs_residual_days", ylim = LIM_BLOOM_SIGMA),
             fig, "Fig2B_points.csv")
 rm(bt); invisible(gc())
 
@@ -343,49 +378,50 @@ export_age <- function(sex, fig, labs) {
 
   ad <- read_precomputed_draw(paste0("age_draws_", sfx_a, ".rds"))
   s <- summarise_ribbon(ad, "actual_age", ".epred", x_name = "age_years", xlim = LIM_AGE)
-  write_panel(s, fig, paste0(labs["mm"], "_mismatch_mean_age.csv"))
-  check_ribbon(paste(fig, labs["mm"]), ad, "actual_age", ".epred", s, "age_years",
+  s <- check_ribbon(paste(fig, labs["mm"]), ad, "actual_age", ".epred", s, "age_years",
                xlim = LIM_AGE, ylim = LIM_MM)
   write_panel(count_mismatch(dmis, "ori_age") %>%
                 rename(age_years = ori_age, mismatch_days = X5MISMATCH, n_records = n) %>%
                 flag_points("age_years", "mismatch_days", LIM_AGE, LIM_MM),
               fig, paste0(labs["mm"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["mm"], "_mismatch_mean_age.csv"))
 
   s <- summarise_ribbon(ad, "actual_age", "sigma", x_name = "age_years", xlim = LIM_AGE)
-  write_panel(s, fig, paste0(labs["sd"], "_mismatch_sigma_age.csv"))
-  check_ribbon(paste(fig, labs["sd"]), ad, "actual_age", "sigma", s, "age_years",
+  s <- check_ribbon(paste(fig, labs["sd"]), ad, "actual_age", "sigma", s, "age_years",
                xlim = LIM_AGE, ylim = LIM_SIG)
   write_panel(count_sigma(dres, "ori_age") %>%
                 rename(age_years = ori_age, abs_residual_days = raw_sigma, n_records = n) %>%
                 flag_points("age_years", "abs_residual_days", LIM_AGE, LIM_SIG),
               fig, paste0(labs["sd"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["sd"], "_mismatch_sigma_age.csv"))
   rm(ad); invisible(gc())
 
   fa <- read_precomputed_draw(paste0("fledging_success_draws_age", sfx, ".rds"))
   s <- summarise_ribbon(fa, "actual_age", "prob_success", x_name = "age_years")
-  write_panel(s, fig, paste0(labs["ns"], "_nest_success_age.csv"))
-  check_ribbon(paste(fig, labs["ns"]), fa, "actual_age", "prob_success", s, "age_years", ylim = LIM_P)
+  s <- check_ribbon(paste(fig, labs["ns"]), fa, "actual_age", "prob_success", s, "age_years", ylim = LIM_P)
   write_panel(success_props(dfl, "ori_age") %>%
                 transmute(age_years = ori_age, n_successful = n, n_records_age = total_n_year,
                           proportion_successful = proportion) %>%
                 flag_points("age_years", "proportion_successful", ylim = LIM_P),
               fig, paste0(labs["ns"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["ns"], "_nest_success_age.csv"))
   rm(fa); invisible(gc())
 
   fg <- read_precomputed_draw(paste0("fledging_grouped_draws", sfx, ".rds"))
   s <- summarise_ribbon(fg, "actual_mismatch", "prob_val", group = "fled_group",
                         x_name = "mismatch_days", xlim = LIM_MM) %>%
     rename(fledgling_category = fled_group)
-  write_panel(s, fig, paste0(labs["cat"], "_fledging_category_probs.csv"))
-  check_ribbon(paste(fig, labs["cat"]), fg, "actual_mismatch", "prob_val",
+  s <- check_ribbon(paste(fig, labs["cat"]), fg, "actual_mismatch", "prob_val",
                s %>% rename(fled_group = fledgling_category), "mismatch_days",
-               group = "fled_group", xlim = LIM_MM, ylim = LIM_P)
+               group = "fled_group", xlim = LIM_MM, ylim = LIM_P) %>%
+    rename(fledgling_category = fled_group)
   write_panel(grouped_props(dfl) %>%
                 transmute(mismatch_days = X5MISMATCH, fledgling_category = fled_group,
                           n_records_category = n, n_records_mismatch_value = total_n_year,
                           proportion = proportion) %>%
                 flag_points("mismatch_days", "proportion", LIM_MM, LIM_P),
               fig, paste0(labs["cat"], "_points.csv"))
+  write_panel(s, fig, paste0(labs["cat"], "_fledging_category_probs.csv"))
   rm(fg); invisible(gc())
 }
 
@@ -404,10 +440,10 @@ for (sx in c("female", "male")) {
   pn <- if (sx == "female") "EDFig2A" else "EDFig2B"
   ad <- read_precomputed_draw(paste0("age_draws_", sx, ".rds"))
   s <- summarise_ribbon(ad, "actual_age", ".epred", x_name = "age_years", xlim = LIM_AGE)
-  write_panel(s, fig, paste0(pn, "_population_", sx, ".csv"))
-  check_ribbon(paste(fig, pn), ad, "actual_age", ".epred", s, "age_years",
+  s <- check_ribbon(paste(fig, pn), ad, "actual_age", ".epred", s, "age_years",
                xlim = LIM_AGE, ylim = LIM_MM)
   rm(ad); invisible(gc())
+  write_panel(s, fig, paste0(pn, "_population_", sx, ".csv"))
   ind <- read_precomputed_draw(paste0("individual_predictions_", sx, "_si.rds")) %>%
     ungroup() %>%
     transmute(ring = as.character(RING), age_years = actual_age,
@@ -493,9 +529,9 @@ e_cmp <- ed3_summary %>% arrange(sex, year)
 check_log[[length(check_log) + 1]] <- data.frame(
   panel = "EDFig3 errorbars", exported_rows_in_x_limits = nrow(e_cmp), drawn_rows = nrow(b_cmp),
   matched_rows = nrow(b_cmp), draws_outside_axis_limits = 0,
-  max_abs_diff_median = max(abs(b_cmp$y - e_cmp$posterior_mean)),
-  max_abs_diff_lower = max(abs(b_cmp$ymin - e_cmp$lower_2.5)),
-  max_abs_diff_upper = max(abs(b_cmp$ymax - e_cmp$upper_97.5)),
+  max_abs_diff_full_vs_drawn_median = max(abs(b_cmp$y - e_cmp$posterior_mean)),
+  max_abs_diff_full_vs_drawn_lower = max(abs(b_cmp$ymin - e_cmp$lower_2.5)),
+  max_abs_diff_full_vs_drawn_upper = max(abs(b_cmp$ymax - e_cmp$upper_97.5)),
   n_drawn_NA = 0
 )
 
@@ -543,9 +579,29 @@ write_panel(data.frame(
 # READMEs
 # =============================================================================
 ribbon_cols <- c(
-  "  posterior_median      posterior median of the plotted quantity at that x (the drawn line)",
-  "  lower_95, upper_95    2.5% and 97.5% posterior quantiles (the drawn 95% ribbon; ggdist::median_qi, .width = 0.95)",
-  "  within_x_axis_limits  TRUE if the x value lies inside the figure's x-axis limits (rows with FALSE are not drawn)"
+  "  posterior_median      full-posterior median of the plotted quantity at that x (all 16,000 draws)",
+  "  lower_95, upper_95    full-posterior 2.5% and 97.5% quantiles (ggdist::median_qi, .width = 0.95, as used by stat_lineribbon)",
+  "  within_x_axis_limits  TRUE if the x value lies inside the figure's x-axis limits (rows with FALSE are not drawn)",
+  "  drawn_median, drawn_lower_95, drawn_upper_95  line and ribbon values as actually rendered in the figure",
+  "                        (ggplot_build of the stat_lineribbon layer with the figure's axis limits). ggplot2 removes",
+  "                        posterior draws outside the y-axis limits before the stat is computed, so these can differ",
+  "                        from the full-posterior columns where n_draws_within_axis_limits < total draws.",
+  "  n_draws_within_axis_limits  number of posterior draw rows at that x that fall inside the y-axis limits"
+)
+censor_note_for <- function(fig) {
+  ck <- bind_rows(check_log)
+  ck <- ck[startsWith(ck$panel, paste0(fig, " ")) &
+           pmax(ck$max_abs_diff_full_vs_drawn_median, ck$max_abs_diff_full_vs_drawn_lower,
+                ck$max_abs_diff_full_vs_drawn_upper) > 1e-8, ]
+  if (nrow(ck) == 0) return(character(0))
+  censor_note(paste(sub("^[^ ]+ ", "", ck$panel), collapse = ", "))
+}
+censor_note <- function(panels) c(
+  "",
+  paste0("NOTE: in ", panels, " some posterior draws fall outside the plotted y-axis range; the rendered line/ribbon"),
+  "(drawn_* columns) is therefore computed from the retained draws only and differs from the full-posterior",
+  "summary (posterior_median, lower_95, upper_95). Both are provided. In all other panels the two are identical",
+  "to machine precision."
 )
 point_note <- "  within_axis_limits    TRUE if the point lies inside the figure's axis limits (FALSE points are outside the plotted range and not drawn)"
 general <- c(
@@ -583,12 +639,14 @@ temporal_readme <- function(fig, sexlab, labs, bloom = FALSE) {
     paste0(labs["ns"], "_points.csv : observed annual proportion of successful breeding records. year; n_successful;",
            " n_records_year (mapped to point size); proportion_successful."),
     point_note,
-    paste0(labs["zeta"], "_zeta.csv : predicted discrimination parameter (zeta; 'consistency', unitless) of the ordinal model vs year."),
+    paste0(labs["zeta"], "_zeta.csv : predicted discrimination parameter (zeta; 'consistency', unitless) of the ordinal model vs year.",
+           " The plotted frame holds one row per draw x outcome category (4 identical zeta values per draw), so",
+           " n_draws_within_axis_limits counts 4 x 16,000 rows; medians and quantiles are computed on that same frame as in the figure."),
     ribbon_cols
   )
 }
-write_readme("Fig2", temporal_readme("Fig. 2", "females", c(mm = "Fig2C", sd = "Fig2D", ns = "Fig2E", zeta = "Fig2F"), bloom = TRUE))
-write_readme("EDFig4", temporal_readme("Extended Data Fig. 4", "males", c(mm = "EDFig4A", sd = "EDFig4B", ns = "EDFig4C", zeta = "EDFig4D")))
+write_readme("Fig2", c(temporal_readme("Fig. 2", "females", c(mm = "Fig2C", sd = "Fig2D", ns = "Fig2E", zeta = "Fig2F"), bloom = TRUE), censor_note_for("Fig2")))
+write_readme("EDFig4", c(temporal_readme("Extended Data Fig. 4", "males", c(mm = "EDFig4A", sd = "EDFig4B", ns = "EDFig4C", zeta = "EDFig4D")), censor_note_for("EDFig4")))
 
 age_readme <- function(fig, sexlab, labs) {
   c(paste0(fig, " source data (", sexlab, ", age and mismatch effects)"), "", general,
@@ -613,8 +671,8 @@ age_readme <- function(fig, sexlab, labs) {
     point_note
   )
 }
-write_readme("Fig3", age_readme("Fig. 3", "females", c(mm = "Fig3A", sd = "Fig3B", ns = "Fig3C", cat = "Fig3D")))
-write_readme("EDFig5", age_readme("Extended Data Fig. 5", "males", c(mm = "EDFig5A", sd = "EDFig5B", ns = "EDFig5C", cat = "EDFig5D")))
+write_readme("Fig3", c(age_readme("Fig. 3", "females", c(mm = "Fig3A", sd = "Fig3B", ns = "Fig3C", cat = "Fig3D")), censor_note_for("Fig3")))
+write_readme("EDFig5", c(age_readme("Extended Data Fig. 5", "males", c(mm = "EDFig5A", sd = "EDFig5B", ns = "EDFig5C", cat = "EDFig5D")), censor_note_for("EDFig5")))
 
 write_readme("EDFig2", c(
   "Extended Data Fig. 2 source data (individual mismatch trajectories with age)", "", general,
@@ -623,7 +681,8 @@ write_readme("EDFig2", c(
   "EDFig2A_individuals_female.csv / EDFig2B_individuals_male.csv : model-implied trajectories of 50 randomly sampled individuals",
   "  (set.seed(42)), including each individual's random intercept and age slope (re_formula = ~(1 + AGE | RING)).",
   "  ring = individual band ID; age_years; posterior_median_mismatch_days = posterior median of the linear predictor (days).",
-  point_note
+  point_note,
+  censor_note_for("EDFig2")
 ))
 write_readme("EDFig3", c(
   "Extended Data Fig. 3 source data (posterior expected fledglings, first vs last study year)", "",

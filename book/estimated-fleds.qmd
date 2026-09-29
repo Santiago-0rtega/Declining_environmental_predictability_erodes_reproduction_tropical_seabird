@@ -129,11 +129,11 @@ plot_estimated_fleds_violin <- ggplot(endpoints_all, aes(x = year, y = expected_
     geom = "errorbar", width = 0.1, linewidth = 0.8, color = "black"
   ) +
   facet_wrap(~sex) +
-  scale_fill_manual(values = setNames(c("#2a5f40", "#c06b10"), levels(endpoints_all$year))) +
+  scale_fill_manual(values = setNames(c("#2f5f8f", "#c06b10"), levels(endpoints_all$year))) +
   labs(
     x = "Year",
     y = "Expected number of fledglings",
-    subtitle = "Posterior expected fledglings: 2003 vs 2023 (mean ± 95% CI)"
+    subtitle = "Posterior expected fledglings: 2003 vs 2023 (mean ± 95% CrI)"
   ) +
   theme_classic(base_size = 11) +
   theme(legend.position = "none", plot.subtitle = element_text(face = "bold"))
